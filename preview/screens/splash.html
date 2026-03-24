@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravo Secure - Splash</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme:{extend:{colors:{primary:"#2563EB","background-dark":"#0a0a0a"},fontFamily:{display:["Manrope","sans-serif"]}}}
+  }
+</script>
+</head>
+<body class="bg-background-dark font-display antialiased overflow-hidden">
+<div class="relative flex h-screen w-full flex-col items-center justify-center bg-background-dark">
+  <div class="absolute inset-0 opacity-10 pointer-events-none bg-gradient-to-b from-primary/20 to-transparent"></div>
+  <div class="relative z-10 flex flex-col items-center justify-center px-6">
+    <div class="mb-8 flex items-center justify-center">
+      <div class="relative w-24 h-24 flex items-center justify-center">
+        <svg class="text-primary" fill="none" height="80" viewBox="0 0 80 80" width="80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 5L10 18.3333V38.3333C10 57.1333 22.8 74.4667 40 78.3333C57.2 74.4667 70 57.1333 70 38.3333V18.3333L40 5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+          <path class="opacity-40" d="M40 20V60M25 35H55" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+        </svg>
+      </div>
+    </div>
+    <h1 class="text-slate-100 text-xl font-bold tracking-[0.15em] leading-tight text-center uppercase">BRAVO SECURE</h1>
+    <p class="text-slate-400 text-base font-light leading-normal mt-2 text-center">Security. Reimagined.</p>
+  </div>
+  <div class="absolute bottom-12 left-0 w-full flex justify-center">
+    <p class="text-slate-600 text-xs font-medium tracking-wider">v1.0.0</p>
+  </div>
+</div>
+</body></html>

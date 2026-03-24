@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravo Secure - Permissions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { "primary": "#2563EB", "background-dark": "#0A0F1E" },
+        fontFamily: { "display": ["Manrope", "sans-serif"] },
+        borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .scroll-area { overflow-y: auto; scrollbar-width: none; }
+  .scroll-area::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 h-screen flex items-center justify-center">
+<div class="flex flex-col w-full h-full max-w-sm">
+
+  <!-- Header -->
+  <header class="flex items-center p-4 pb-2">
+    <button class="flex size-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-100">arrow_back</span>
+    </button>
+  </header>
+
+  <!-- Progress -->
+  <div class="px-6 mb-4">
+    <span class="text-xs font-medium text-primary block mb-1.5">Step 3 of 4</span>
+    <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+      <div class="h-full bg-primary rounded-full w-3/4"></div>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  <div class="px-6 pt-2 pb-6">
+    <h1 class="text-3xl font-bold leading-tight tracking-tight">Allow access</h1>
+    <p class="text-slate-400 text-base mt-2">Bravo Secure needs these to keep you protected</p>
+  </div>
+
+  <!-- Permission rows -->
+  <div class="scroll-area flex flex-col gap-3 px-6 flex-1 pb-2">
+
+    <!-- Location -->
+    <div class="flex items-center gap-3 bg-primary/5 border border-primary/10 p-4 rounded-xl">
+      <div class="flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-12 text-primary">
+        <span class="material-symbols-outlined">location_on</span>
+      </div>
+      <div class="flex flex-col flex-1">
+        <p class="text-slate-100 text-base font-bold">Location</p>
+        <p class="text-slate-400 text-sm leading-snug">Required for live tracking and bookings</p>
+      </div>
+      <button class="shrink-0 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-full text-sm font-bold transition-colors">
+        Allow
+      </button>
+    </div>
+
+    <!-- Notifications — granted -->
+    <div class="flex items-center gap-3 bg-primary/5 border border-primary/10 p-4 rounded-xl">
+      <div class="flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-12 text-primary">
+        <span class="material-symbols-outlined">notifications</span>
+      </div>
+      <div class="flex flex-col flex-1">
+        <p class="text-slate-100 text-base font-bold">Notifications</p>
+        <p class="text-slate-400 text-sm leading-snug">Alerts, SOS updates, booking confirmations</p>
+      </div>
+      <div class="flex items-center justify-center size-8 bg-green-500/20 text-green-400 rounded-full shrink-0">
+        <span class="material-symbols-outlined text-[20px]">check</span>
+      </div>
+    </div>
+
+    <!-- Camera -->
+    <div class="flex items-center gap-3 bg-primary/5 border border-primary/10 p-4 rounded-xl">
+      <div class="flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-12 text-primary">
+        <span class="material-symbols-outlined">photo_camera</span>
+      </div>
+      <div class="flex flex-col flex-1">
+        <p class="text-slate-100 text-base font-bold">Camera</p>
+        <p class="text-slate-400 text-sm leading-snug">Document scanning and video calls</p>
+      </div>
+      <button class="shrink-0 border border-primary/30 text-slate-300 px-4 py-2 rounded-full text-sm font-bold hover:bg-primary/10 transition-colors">
+        Allow
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="mt-auto flex flex-col items-center gap-4 p-6 pb-10">
+    <button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-base transition-all shadow-lg shadow-primary/20">
+      Continue
+    </button>
+    <button class="text-slate-400 text-sm font-medium hover:text-primary transition-colors">
+      Skip — I'll do this later
+    </button>
+  </div>
+
+</div>
+</body></html>
