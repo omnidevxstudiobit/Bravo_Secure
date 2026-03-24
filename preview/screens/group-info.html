@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravo Messenger — Group Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary:   "#2563EB",
+          "bg-dark": "#0A0F1E",
+          surface:   "#0D1929",
+          border:    "#1E2D45",
+        },
+        fontFamily: { display: ["Manrope"] },
+        borderRadius: { DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  * { scrollbar-width: none; }
+  *::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body class="bg-bg-dark font-display text-slate-100 h-screen flex flex-col overflow-hidden">
+
+<!-- Top Bar -->
+<header class="flex items-center justify-between px-4 pt-10 pb-3 shrink-0 border-b" style="background:#0A0F1E; border-color:#1E2D45;">
+  <div class="flex items-center gap-3">
+    <button onclick="goBack()" class="flex items-center justify-center size-9 rounded-full hover:bg-primary/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-100 text-[20px]">arrow_back</span>
+    </button>
+    <div class="flex items-center gap-3">
+      <!-- Stacked initials -->
+      <div class="flex -space-x-2.5">
+        <div class="inline-flex size-8 rounded-full items-center justify-center text-[10px] font-bold text-white border-2 shrink-0" style="background:#7B5EA7; border-color:#0A0F1E;">AR</div>
+        <div class="inline-flex size-8 rounded-full items-center justify-center text-[10px] font-bold text-white border-2 shrink-0" style="background:#0E7490; border-color:#0A0F1E;">CT</div>
+        <div class="inline-flex size-8 rounded-full items-center justify-center text-[10px] font-bold text-white border-2 shrink-0" style="background:#334155; border-color:#0A0F1E;">JV</div>
+      </div>
+      <div>
+        <h2 class="text-[14px] font-bold leading-tight">Alpha Team</h2>
+        <p class="text-[10px] font-semibold uppercase tracking-widest" style="color:#60A5FA;">12 Members Online</p>
+      </div>
+    </div>
+  </div>
+  <button onclick="toggleInfo()" class="flex items-center justify-center size-9 rounded-full hover:bg-primary/10 transition-colors">
+    <span class="material-symbols-outlined text-[20px]" style="color:#60A5FA;">info</span>
+  </button>
+</header>
+
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto px-4 py-3 space-y-4">
+
+  <div class="flex justify-center">
+    <span class="text-[10px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider" style="background:rgba(37,99,235,0.1); color:#60A5FA80;">Today</span>
+  </div>
+
+  <!-- Received 1 -->
+  <div class="flex items-end gap-2">
+    <div class="size-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white shrink-0 mb-1" style="background:#7B5EA7;">AR</div>
+    <div class="flex flex-col gap-0.5 max-w-[75%]">
+      <span class="text-[11px] font-bold ml-1" style="color:#a855f7;">Alex Rivers</span>
+      <div class="rounded-2xl rounded-bl-none px-3.5 py-2.5 text-[13px] leading-relaxed" style="background:#0D1929; border:1px solid #1E2D45;">
+        Has everyone reviewed the security protocols for the upcoming deployment?
+      </div>
+      <span class="text-[10px] text-slate-600 ml-1">09:41 AM</span>
+    </div>
+  </div>
+
+  <!-- Received 2 -->
+  <div class="flex items-end gap-2">
+    <div class="size-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white shrink-0 mb-1" style="background:#0E7490;">CT</div>
+    <div class="flex flex-col gap-0.5 max-w-[75%]">
+      <span class="text-[11px] font-bold ml-1" style="color:#a855f7;">Casey Thorne</span>
+      <div class="rounded-2xl rounded-bl-none px-3.5 py-2.5 text-[13px] leading-relaxed" style="background:#0D1929; border:1px solid #1E2D45;">
+        I'm still looking at the firewall rules. Give me 10 more minutes.
+      </div>
+      <span class="text-[10px] text-slate-600 ml-1">09:43 AM</span>
+    </div>
+  </div>
+
+  <!-- Sent -->
+  <div class="flex flex-col items-end gap-0.5 ml-auto max-w-[75%]">
+    <div class="rounded-2xl rounded-br-none px-3.5 py-2.5 text-[13px] leading-relaxed text-white" style="background:#0D1F3C; border:1px solid rgba(37,99,235,0.3);">
+      Just finished. Everything looks solid on my end. Ready whenever the team is.
+    </div>
+    <div class="flex items-center gap-1 mr-1">
+      <span class="text-[10px] text-slate-600">09:45 AM</span>
+      <span class="material-symbols-outlined filled text-[14px]" style="color:#2563EB;">done_all</span>
+    </div>
+  </div>
+
+  <!-- Received 3 -->
+  <div class="flex items-end gap-2">
+    <div class="size-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white shrink-0 mb-1" style="background:#334155;">JV</div>
+    <div class="flex flex-col gap-0.5 max-w-[75%]">
+      <span class="text-[11px] font-bold ml-1" style="color:#a855f7;">Jordan Vance</span>
+      <div class="rounded-2xl rounded-bl-none px-3.5 py-2.5 text-[13px] leading-relaxed" style="background:#0D1929; border:1px solid #1E2D45;">
+        Perfect. Let's sync up after Casey is done.
+      </div>
+      <span class="text-[10px] text-slate-600 ml-1">09:46 AM</span>
+    </div>
+  </div>
+
+</main>
+
+<!-- Input Bar -->
+<footer class="shrink-0 px-4 py-3 flex items-center gap-2.5 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
+  <button class="text-slate-500 hover:text-blue-400 transition-colors">
+    <span class="material-symbols-outlined text-[22px]">add_circle</span>
+  </button>
+  <div class="flex-1 h-10">
+    <input class="w-full h-full rounded-full px-4 text-[13px] text-slate-100 placeholder:text-slate-600 focus:outline-none"
+      style="background:#0D1929; border:1px solid #1E2D45;"
+      placeholder="Type message..." type="text"/>
+  </div>
+  <button class="size-9 flex items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95"
+    style="background:#2563EB; box-shadow:0 4px 14px rgba(37,99,235,0.4);">
+    <span class="material-symbols-outlined text-white text-[18px]">send</span>
+  </button>
+</footer>
+
+<!-- Group Info Sheet -->
+<div id="info-overlay" class="hidden absolute inset-0 z-30 bg-black/50 backdrop-blur-[2px]" onclick="toggleInfo()"></div>
+<div id="info-sheet" class="absolute bottom-0 left-0 right-0 z-40 rounded-t-3xl flex flex-col border-t shadow-2xl"
+  style="background:#0A0F1E; border-color:#1E2D45; max-height:72%; transform:translateY(100%); transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);">
+
+  <!-- Drag handle -->
+  <div class="flex justify-center pt-3 pb-1 cursor-pointer" onclick="toggleInfo()">
+    <div class="w-10 h-1 rounded-full" style="background:#1E2D45;"></div>
+  </div>
+
+  <div class="px-5 pb-2 overflow-y-auto flex-1">
+    <h2 class="text-xl font-extrabold mb-0.5">Alpha Team</h2>
+    <p class="text-[13px] text-slate-500 mb-5">Internal project coordination group</p>
+
+    <p class="text-[10px] font-bold uppercase tracking-widest mb-3" style="color:#60A5FA80;">Members (12)</p>
+
+    <div class="space-y-3 mb-5">
+
+      <!-- Member rows -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="size-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background:#7B5EA7;">AR</div>
+          <div><p class="text-[13px] font-semibold">Alex Rivers</p><p class="text-[11px]" style="color:#60A5FA;">Admin</p></div>
+        </div>
+        <span class="material-symbols-outlined text-slate-500 text-[18px]">chat</span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="size-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background:#0E7490;">CT</div>
+          <div><p class="text-[13px] font-semibold">Casey Thorne</p><p class="text-[11px] text-slate-500">Security Engineer</p></div>
+        </div>
+        <span class="material-symbols-outlined text-slate-500 text-[18px]">chat</span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="size-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background:#334155;">JV</div>
+          <div><p class="text-[13px] font-semibold">Jordan Vance</p><p class="text-[11px] text-slate-500">Lead Architect</p></div>
+        </div>
+        <span class="material-symbols-outlined text-slate-500 text-[18px]">chat</span>
+      </div>
+
+      <div class="flex items-center justify-between opacity-60">
+        <div class="flex items-center gap-3">
+          <div class="size-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style="background:#4B5563;">RQ</div>
+          <div><p class="text-[13px] font-semibold">Riley Quinn</p><p class="text-[11px] text-slate-500">QA Specialist</p></div>
+        </div>
+        <span class="material-symbols-outlined text-slate-500 text-[18px]">chat</span>
+      </div>
+
+    </div>
+
+    <div class="flex flex-col gap-2 pb-6">
+      <button class="w-full py-3.5 rounded-xl font-bold text-[14px] transition-colors hover:opacity-90" style="background:rgba(37,99,235,0.12); color:#60A5FA; border:1px solid rgba(37,99,235,0.2);">
+        Add Members
+      </button>
+      <button class="w-full py-2.5 font-semibold text-[13px] flex items-center justify-center gap-1.5 text-red-400 hover:text-red-300 transition-colors">
+        <span class="material-symbols-outlined text-[16px]">logout</span>
+        Leave Group
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let sheetOpen = false;
+
+  function toggleInfo() {
+    const sheet   = document.getElementById('info-sheet');
+    const overlay = document.getElementById('info-overlay');
+    sheetOpen = !sheetOpen;
+    if (sheetOpen) {
+      overlay.classList.remove('hidden');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        sheet.style.transform = 'translateY(0)';
+      }));
+    } else {
+      sheet.style.transform = 'translateY(100%)';
+      setTimeout(() => overlay.classList.add('hidden'), 360);
+    }
+  }
+
+  // Auto-open sheet on load to match original design
+  window.addEventListener('load', () => setTimeout(toggleInfo, 300));
+
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('messenger-home'));
+      window.parent.loadScreen('screens/messenger-home.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+</script>
+</body>
+</html>

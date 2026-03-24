@@ -346,7 +346,7 @@
     <!-- Sidebar -->
     <nav class="sidebar">
       <div class="sidebar-section">Auth</div>
-      <div class="nav-item active" onclick="loadScreen('screens/splash.html', this)">
+      <div class="nav-item" onclick="loadScreen('screens/splash.html', this)">
         <span class="nav-dot"></span> Splash
       </div>
       <div class="nav-item" onclick="loadScreen('screens/onboarding.html', this)">
@@ -355,7 +355,7 @@
       <div class="nav-item" onclick="loadScreen('screens/login.html', this)">
         <span class="nav-dot"></span> Login
       </div>
-      <div class="nav-item" onclick="loadScreen('screens/register.html', this)">
+      <div class="nav-item active" onclick="loadScreen('screens/register.html', this)">
         <span class="nav-dot"></span> Register
       </div>
       <div class="nav-item" onclick="loadScreen('screens/otp.html', this)">
@@ -385,6 +385,9 @@
       </div>
       <div class="nav-item" onclick="loadScreen('screens/call.html', this)">
         <span class="nav-dot"></span> Call Screen
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/group-info.html', this)">
+        <span class="nav-dot"></span> Group Chat
       </div>
       <div class="nav-item" onclick="loadScreen('screens/vault.html', this)">
         <span class="nav-dot"></span> Secure Vault
@@ -478,7 +481,7 @@
           <iframe
             id="screen-iframe"
             class="screen-iframe"
-            src="screens/splash.html"
+            src="screens/register.html"
             title="Screen Preview"
           ></iframe>
           <!-- Home Indicator -->
@@ -506,11 +509,11 @@
         <div class="panel-title">Current Screen</div>
         <div class="info-row">
           <span class="info-label">Name</span>
-          <span class="info-value gold" id="info-name">Splash</span>
+          <span class="info-value gold" id="info-name">Register</span>
         </div>
         <div class="info-row">
           <span class="info-label">Route</span>
-          <span class="info-value" id="info-route">Auth/Splash</span>
+          <span class="info-value" id="info-route">Auth/Register</span>
         </div>
         <div class="info-row">
           <span class="info-label">Status</span>
@@ -525,7 +528,7 @@
         <div class="panel-title">Progress</div>
         <div class="info-row">
           <span class="info-label">Auth</span>
-          <span class="info-value">1 / 6</span>
+          <span class="info-value">3 / 6</span>
         </div>
         <div class="info-row">
           <span class="info-label">Booking</span>
@@ -593,15 +596,16 @@
       'screens/splash.html':          { name: 'Splash',          route: 'Auth/Splash',         status: 'done' },
       'screens/onboarding.html':      { name: 'Onboarding',      route: 'Auth/Onboarding',     status: 'todo' },
       'screens/login.html':           { name: 'Login',           route: 'Auth/Login',          status: 'todo' },
-      'screens/register.html':        { name: 'Register',        route: 'Auth/Register',       status: 'todo' },
+      'screens/register.html':        { name: 'Register',        route: 'Auth/Register',       status: 'done' },
       'screens/otp.html':             { name: 'OTP Verify',      route: 'Auth/OTPVerification',status: 'todo' },
       'screens/role-selection.html':  { name: 'Role Selection',  route: 'Auth/RoleSelection',  status: 'done' },
       'screens/permissions.html':     { name: 'Permissions',      route: 'Auth/Permissions',     status: 'done' },
       'screens/profile-completion.html': { name: 'Profile Completion', route: 'Auth/ProfileCompletion', status: 'todo' },
       'screens/dashboard.html':       { name: 'Dashboard',       route: 'Main/Dashboard',      status: 'todo' },
-      'screens/messenger-home.html':  { name: 'Conversations',   route: 'Messenger/Home',      status: 'todo' },
-      'screens/chat.html':            { name: 'Chat',            route: 'Messenger/Chat',      status: 'todo' },
+      'screens/messenger-home.html':  { name: 'Conversations',   route: 'Messenger/Home',      status: 'done' },
+      'screens/chat.html':            { name: 'Chat',            route: 'Messenger/Chat',      status: 'done' },
       'screens/call.html':            { name: 'Call Screen',     route: 'Messenger/Call',      status: 'todo' },
+      'screens/group-info.html':      { name: 'Group Chat',      route: 'Messenger/GroupChat', status: 'done' },
       'screens/vault.html':           { name: 'Secure Vault',    route: 'Messenger/Vault',     status: 'todo' },
       'screens/booking-home.html':    { name: 'Booking Home',    route: 'Booking/Home',        status: 'todo' },
       'screens/zone-map.html':        { name: 'Zone Map',        route: 'Booking/ZoneMap',     status: 'todo' },
@@ -616,7 +620,7 @@
       'screens/job-marketplace.html': { name: 'Job Marketplace', route: 'Agent/Jobs',          status: 'todo' },
       'screens/earnings.html':        { name: 'Earnings',        route: 'Agent/Earnings',      status: 'todo' },
       'screens/news-feed.html':       { name: 'Intel Feed',      route: 'Main/News',           status: 'todo' },
-      'screens/profile.html':         { name: 'Profile',         route: 'Main/Profile',        status: 'todo' },
+      'screens/profile.html':         { name: 'Profile / Drawer', route: 'Main/Profile',        status: 'done' },
     };
 
     function loadScreen(src, el) {

@@ -1,22 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-<meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravo Messenger — Conversations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary:        "#2563EB",
+          "accent-purple":"#7B5EA7",
+          "bg-dark":      "#0A0F1E",
+          surface:        "#0D1929",
+          border:         "#1E2D45",
+        },
+        fontFamily: { display: ["Manrope"] },
+        borderRadius: { DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+      },
+    },
+  }
+</script>
 <style>
-  body { margin:0; background:#0a0a0a; color:#94a3b8; font-family:'Manrope',sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    height:100vh; gap:12px; }
-  .shield { color:#2563EB; opacity:0.3; }
-  p { font-size:12px; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
-  span { font-size:11px; color:#475569; }
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  * { scrollbar-width: none; }
+  *::-webkit-scrollbar { display: none; }
 </style>
 </head>
-<body>
-<svg class="shield" width="40" height="40" viewBox="0 0 80 80" fill="none">
-  <path d="M40 5L10 18.3333V38.3333C10 57.1333 22.8 74.4667 40 78.3333C57.2 74.4667 70 57.1333 70 38.3333V18.3333L40 5Z" stroke="currentColor" stroke-width="2.5" fill="none"/>
-</svg>
-<p>Design pending</p>
-<span>Send your HTML design to implement this screen</span>
+<body class="bg-bg-dark font-display text-slate-100 h-screen flex flex-col">
+
+<!-- Top Bar -->
+<header class="sticky top-0 z-30 px-4 pt-10 pb-3 flex items-center justify-between border-b" style="background:#0A0F1E; border-color:#1E2D45;">
+  <div class="flex items-center gap-2">
+    <button onclick="goBack()" class="flex items-center justify-center size-8 rounded-full hover:bg-primary/10 transition-colors mr-1">
+      <span class="material-symbols-outlined text-slate-400 text-[20px]">arrow_back</span>
+    </button>
+    <span class="material-symbols-outlined filled text-primary text-[20px]">lock</span>
+    <h1 class="text-base font-bold tracking-tight">Bravo Messenger</h1>
+  </div>
+  <button class="flex items-center justify-center size-9 rounded-full hover:bg-primary/10 transition-colors">
+    <span class="material-symbols-outlined text-primary text-[20px]">edit_square</span>
+  </button>
+</header>
+
+<!-- E2E Badge -->
+<div class="px-4 py-2.5">
+  <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl" style="background:rgba(37,99,235,0.07); border:1px solid rgba(37,99,235,0.15);">
+    <span class="material-symbols-outlined filled text-primary text-[16px]">lock</span>
+    <p class="text-[11px] font-bold uppercase tracking-wider" style="color:#60A5FA;">All conversations are end-to-end encrypted</p>
+  </div>
+</div>
+
+<!-- Search -->
+<div class="px-4 pb-3">
+  <div class="flex items-center h-9 rounded-full px-3 gap-2" style="background:#0D1929; border:1px solid #1E2D45;">
+    <span class="material-symbols-outlined text-slate-500 text-[18px]">search</span>
+    <input class="bg-transparent border-none focus:ring-0 text-sm flex-1 text-slate-100 placeholder:text-slate-600 p-0 focus:outline-none" placeholder="Search conversations" type="text"/>
+  </div>
+</div>
+
+<!-- Conversation List -->
+<div class="flex-1 overflow-y-auto">
+
+  <!-- Row 1 — Unread -->
+  <div onclick="openChat()" class="flex items-center gap-3 px-4 h-[68px] cursor-pointer hover:bg-primary/5 transition-colors" style="border-bottom:1px solid #1E2D45;">
+    <div class="relative shrink-0">
+      <div class="size-11 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background:#7B5EA7;">AR</div>
+      <div class="absolute bottom-0 right-0 size-2.5 rounded-full border-2" style="background:#00C851; border-color:#0A0F1E;"></div>
+    </div>
+    <div class="flex flex-col flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1 min-w-0">
+          <span class="text-[14px] font-bold truncate">Alex Rivera</span>
+          <span class="material-symbols-outlined filled text-green-500 text-[13px]">verified_user</span>
+        </div>
+        <span class="text-[11px] text-slate-500 shrink-0">10:24 AM</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] text-slate-400 truncate">🔥 Message will disappear</p>
+        <div class="text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center text-white" style="background:#2563EB;">2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 — Read -->
+  <div class="flex items-center gap-3 px-4 h-[68px] cursor-pointer hover:bg-primary/5 transition-colors" style="border-bottom:1px solid #1E2D45;">
+    <div class="size-11 rounded-full shrink-0 flex items-center justify-center text-sm font-bold text-white" style="background:#334155;">JS</div>
+    <div class="flex flex-col flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1 min-w-0">
+          <span class="text-[14px] font-bold truncate">Jordan Smith</span>
+          <span class="material-symbols-outlined filled text-green-500 text-[13px]">verified_user</span>
+        </div>
+        <span class="text-[11px] text-slate-500 shrink-0">Yesterday</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] text-slate-500 truncate">I've sent the encrypted documents.</p>
+        <span class="material-symbols-outlined filled text-[17px]" style="color:#2563EB;">done_all</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="flex items-center gap-3 px-4 h-[68px] cursor-pointer hover:bg-primary/5 transition-colors" style="border-bottom:1px solid #1E2D45;">
+    <div class="size-11 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-sm" style="background:#7B5EA7;">SL</div>
+    <div class="flex flex-col flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1 min-w-0">
+          <span class="text-[14px] font-bold truncate">Sarah Lewis</span>
+          <span class="material-symbols-outlined filled text-green-500 text-[13px]">verified_user</span>
+        </div>
+        <span class="text-[11px] text-slate-500 shrink-0">Tuesday</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] text-slate-500 truncate">🔥 Message will disappear</p>
+        <span class="material-symbols-outlined filled text-[17px]" style="color:#2563EB;">done_all</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="flex items-center gap-3 px-4 h-[68px] cursor-pointer hover:bg-primary/5 transition-colors" style="border-bottom:1px solid #1E2D45;">
+    <div class="size-11 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-sm" style="background:#0E7490;">EK</div>
+    <div class="flex flex-col flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1 min-w-0">
+          <span class="text-[14px] font-bold truncate">Elena K.</span>
+          <span class="material-symbols-outlined filled text-green-500 text-[13px]">verified_user</span>
+        </div>
+        <span class="text-[11px] text-slate-500 shrink-0">Jul 12</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] text-slate-500 truncate">Meeting confirmed for 3 PM.</p>
+        <span class="material-symbols-outlined filled text-[17px]" style="color:#2563EB;">done_all</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 5 -->
+  <div class="flex items-center gap-3 px-4 h-[68px] cursor-pointer hover:bg-primary/5 transition-colors" style="border-bottom:1px solid #1E2D45;">
+    <div class="size-11 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-sm" style="background:#7B5EA7;">MK</div>
+    <div class="flex flex-col flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1 min-w-0">
+          <span class="text-[14px] font-bold truncate">Marcus Knight</span>
+          <span class="material-symbols-outlined filled text-green-500 text-[13px]">verified_user</span>
+        </div>
+        <span class="text-[11px] text-slate-500 shrink-0">Jul 10</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] text-slate-500 truncate">Thanks for the update!</p>
+        <span class="material-symbols-outlined filled text-[17px]" style="color:#2563EB;">done_all</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAB -->
+<div class="absolute right-5 bottom-20 z-40">
+  <button class="size-13 w-13 h-13 rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-95 hover:scale-105"
+    style="background:#2563EB; width:52px; height:52px; box-shadow:0 8px 24px rgba(37,99,235,0.45);">
+    <span class="material-symbols-outlined filled text-white text-[22px]">chat</span>
+  </button>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="shrink-0 flex items-center justify-around px-2 py-2 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
+  <a class="flex flex-col items-center gap-0.5 px-4 py-1" style="color:#2563EB;">
+    <span class="material-symbols-outlined filled text-[22px]">forum</span>
+    <span class="text-[9px] font-bold uppercase tracking-tight">Messenger</span>
+  </a>
+  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
+    <span class="material-symbols-outlined text-[22px]">call</span>
+    <span class="text-[9px] font-bold uppercase tracking-tight">Calls</span>
+  </a>
+  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
+    <span class="material-symbols-outlined text-[22px]">group</span>
+    <span class="text-[9px] font-bold uppercase tracking-tight">Contacts</span>
+  </a>
+  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
+    <span class="material-symbols-outlined text-[22px]">settings</span>
+    <span class="text-[9px] font-bold uppercase tracking-tight">Settings</span>
+  </a>
+</nav>
+
+<script>
+  function openChat() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('chat.html'));
+      window.parent.loadScreen('screens/chat.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      window.parent.loadScreen('screens/dashboard.html',
+        window.parent.document.querySelector('.nav-item[onclick*="dashboard"]'));
+    }
+  }
+</script>
 </body>
 </html>
