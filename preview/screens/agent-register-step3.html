@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme:{ extend:{
+      colors:{ "primary":"#7C3AED","primary-light":"#8B5CF6","background-dark":"#0A0F1E" },
+      fontFamily:{ "display":["Manrope","sans-serif"] },
+      borderRadius:{ "DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px" }
+    }}
+  }
+</script>
+<style>
+  body { font-family:'Manrope',sans-serif; height:100dvh; overflow:hidden; }
+  main::-webkit-scrollbar { display:none; } main { scrollbar-width:none; }
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .filled { font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24; }
+
+  /* Doc row */
+  .doc-row {
+    display:flex; align-items:center; gap:14px;
+    padding:14px 16px;
+    border-bottom:1px solid #0D1929;
+    transition:background 0.15s;
+    cursor:pointer;
+  }
+  .doc-row:hover { background:rgba(124,58,237,0.05); }
+  .doc-row:last-child { border-bottom:none; }
+
+  /* Upload button states */
+  .upload-btn {
+    min-width:80px; height:34px; padding:0 14px;
+    border-radius:9999px; font-size:11px; font-weight:700;
+    letter-spacing:0.04em; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:4px;
+    transition:all 0.2s; border:none; font-family:'Manrope',sans-serif;
+    white-space:nowrap;
+  }
+  .upload-btn.required { background:#7C3AED; color:white; }
+  .upload-btn.required:hover { background:#6D28D9; }
+  .upload-btn.optional { background:rgba(124,58,237,0.15); color:#a78bfa; }
+  .upload-btn.optional:hover { background:rgba(124,58,237,0.25); }
+  .upload-btn.done { background:rgba(34,197,94,0.15); color:#4ade80; pointer-events:none; }
+
+  /* Doc icon */
+  .doc-icon {
+    width:44px; height:44px; border-radius:0.75rem;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .doc-icon.purple { background:rgba(124,58,237,0.14); color:#a78bfa; }
+  .doc-icon.neutral { background:#0D1929; border:1px solid #1E2D45; color:#475569; }
+
+  /* Upload progress overlay */
+  @keyframes bar-sweep { from{width:0} to{width:100%} }
+  .upload-prog { height:2px; background:#1E2D45; border-radius:9999px; overflow:hidden; margin-top:4px; }
+  .upload-prog-fill { height:100%; border-radius:9999px; background:linear-gradient(90deg,#7C3AED,#8B5CF6); animation:bar-sweep 1.5s ease forwards; }
+</style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 h-screen flex flex-col">
+
+<!-- Header -->
+<header class="px-4 pt-[50px] pb-3 flex items-center justify-between">
+  <button onclick="goBack()" class="size-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:20px">arrow_back</span>
+  </button>
+  <h2 class="text-sm font-bold text-slate-200 flex-1 text-center -ml-9">Upload Documents</h2>
+</header>
+
+<!-- Progress -->
+<div class="px-5 pb-4">
+  <div class="flex items-center justify-between mb-2">
+    <span class="text-xs font-semibold" style="color:#8B5CF6">Identity &amp; Certification</span>
+    <span class="text-xs text-slate-500 uppercase tracking-wider font-medium">Step 3 of 4</span>
+  </div>
+  <div class="flex gap-1.5 h-1.5 w-full">
+    <div class="flex-1 rounded-full" style="background:linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+    <div class="flex-1 rounded-full" style="background:linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+    <div class="flex-1 rounded-full" style="background:linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+    <div class="flex-1 rounded-full bg-slate-800"></div>
+  </div>
+</div>
+
+<main class="flex-1 px-0 pb-32 overflow-y-auto">
+
+  <!-- Heading -->
+  <div class="px-5 pt-2 pb-5">
+    <h1 class="text-2xl font-bold mb-1">Identity &amp; Certification</h1>
+    <p class="text-sm text-slate-400 leading-relaxed">Provide credentials to verify your security clearance. All documents are encrypted.</p>
+  </div>
+
+  <!-- Document list -->
+  <div style="background:#0D1929;border-top:1px solid #1E2D45;border-bottom:1px solid #1E2D45">
+
+    <!-- Government ID — required -->
+    <div class="doc-row" id="row-govid">
+      <div class="doc-icon purple">
+        <span class="material-symbols-outlined" style="font-size:20px">badge</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-slate-100">Government ID</p>
+        <p class="text-[10px] font-bold uppercase tracking-wider mt-0.5" style="color:#7C3AED" id="lbl-govid">Required</p>
+        <div class="upload-prog hidden" id="prog-govid"><div class="upload-prog-fill"></div></div>
+      </div>
+      <input type="file" id="file-govid" class="hidden" accept="image/*,.pdf" onchange="handleUpload('govid',event)"/>
+      <button class="upload-btn required" id="btn-govid" onclick="document.getElementById('file-govid').click()">
+        Upload
+      </button>
+    </div>
+
+    <!-- CPO License — required -->
+    <div class="doc-row" id="row-cpo">
+      <div class="doc-icon purple">
+        <span class="material-symbols-outlined" style="font-size:20px">workspace_premium</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-slate-100">CPO License</p>
+        <p class="text-[10px] font-bold uppercase tracking-wider mt-0.5" style="color:#7C3AED" id="lbl-cpo">Required</p>
+        <div class="upload-prog hidden" id="prog-cpo"><div class="upload-prog-fill"></div></div>
+      </div>
+      <input type="file" id="file-cpo" class="hidden" accept="image/*,.pdf" onchange="handleUpload('cpo',event)"/>
+      <button class="upload-btn required" id="btn-cpo" onclick="document.getElementById('file-cpo').click()">
+        Upload
+      </button>
+    </div>
+
+    <!-- Driver's License — optional -->
+    <div class="doc-row" id="row-driver">
+      <div class="doc-icon neutral">
+        <span class="material-symbols-outlined" style="font-size:20px">directions_car</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-slate-100">Driver's License</p>
+        <p class="text-[10px] font-medium uppercase tracking-wider text-slate-500 mt-0.5" id="lbl-driver">Optional</p>
+        <div class="upload-prog hidden" id="prog-driver"><div class="upload-prog-fill"></div></div>
+      </div>
+      <input type="file" id="file-driver" class="hidden" accept="image/*,.pdf" onchange="handleUpload('driver',event)"/>
+      <button class="upload-btn optional" id="btn-driver" onclick="document.getElementById('file-driver').click()">
+        Upload
+      </button>
+    </div>
+
+    <!-- First Aid — optional -->
+    <div class="doc-row" id="row-firstaid">
+      <div class="doc-icon neutral">
+        <span class="material-symbols-outlined" style="font-size:20px">medical_services</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-slate-100">First Aid Certificate</p>
+        <p class="text-[10px] font-medium uppercase tracking-wider text-slate-500 mt-0.5" id="lbl-firstaid">Optional</p>
+        <div class="upload-prog hidden" id="prog-firstaid"><div class="upload-prog-fill"></div></div>
+      </div>
+      <input type="file" id="file-firstaid" class="hidden" accept="image/*,.pdf" onchange="handleUpload('firstaid',event)"/>
+      <button class="upload-btn optional" id="btn-firstaid" onclick="document.getElementById('file-firstaid').click()">
+        Upload
+      </button>
+    </div>
+
+    <!-- Firearms Permit — optional -->
+    <div class="doc-row" id="row-firearms">
+      <div class="doc-icon neutral">
+        <span class="material-symbols-outlined" style="font-size:20px">gpp_maybe</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-slate-100">Firearms Permit</p>
+        <p class="text-[10px] font-medium uppercase tracking-wider text-slate-500 mt-0.5" id="lbl-firearms">Optional</p>
+        <div class="upload-prog hidden" id="prog-firearms"><div class="upload-prog-fill"></div></div>
+      </div>
+      <input type="file" id="file-firearms" class="hidden" accept="image/*,.pdf" onchange="handleUpload('firearms',event)"/>
+      <button class="upload-btn optional" id="btn-firearms" onclick="document.getElementById('file-firearms').click()">
+        Upload
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Privacy note -->
+  <div class="mx-4 mt-5 p-4 rounded-xl flex items-start gap-3" style="background:rgba(245,158,11,0.06);border-left:3px solid #F59E0B">
+    <span class="material-symbols-outlined filled text-amber-400 shrink-0 mt-0.5" style="font-size:18px">lock</span>
+    <p class="text-xs text-amber-200/80 leading-relaxed">Bravo Secure uses end-to-end encryption for all documents. Your data is stored under PDPA regulations and used only for background verification.</p>
+  </div>
+
+  <!-- Upload status summary -->
+  <div class="mx-4 mt-4 p-3.5 rounded-xl flex items-center gap-3" style="background:#0D1929;border:1px solid #1E2D45" id="status-card">
+    <span class="material-symbols-outlined text-slate-600" style="font-size:18px" id="status-icon">upload_file</span>
+    <p class="text-xs text-slate-500" id="status-text">Upload required documents to continue</p>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 right-0 px-5 pb-5 pt-2 space-y-2.5" style="background:linear-gradient(to top,#0A0F1E 75%,transparent)">
+  <button id="submit-btn" onclick="goNext()" disabled
+    class="w-full font-bold py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-not-allowed"
+    style="background:#1A2640;color:#334155;letter-spacing:0.04em;border:1px solid #1E2D45">
+    Submit for Review
+  </button>
+  <button class="w-full text-center text-slate-600 hover:text-slate-400 transition-colors text-xs font-medium py-1">
+    Save progress — I'll finish later
+  </button>
+</footer>
+
+<script>
+  const uploaded = {};
+  const required = ['govid','cpo'];
+
+  function handleUpload(key, e) {
+    const file = e?.target?.files?.[0];
+    if (!file) return;
+
+    const prog = document.getElementById('prog-'+key);
+    const btn  = document.getElementById('btn-'+key);
+    const lbl  = document.getElementById('lbl-'+key);
+    const icon = document.getElementById('row-'+key)?.querySelector('.doc-icon');
+
+    // Show progress bar
+    prog.classList.remove('hidden');
+    btn.style.opacity = '0.5';
+    btn.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      uploaded[key] = true;
+      prog.classList.add('hidden');
+
+      // Done state
+      btn.className = 'upload-btn done';
+      btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:14px">check_circle</span> Done';
+      lbl.textContent = file.name.length > 18 ? file.name.slice(0,18)+'…' : file.name;
+      lbl.style.color = '#4ade80';
+      if (icon) { icon.style.background='rgba(34,197,94,0.1)'; icon.style.color='#4ade80'; }
+
+      updateStatus();
+    }, 1500);
+  }
+
+  function updateStatus() {
+    const allRequired = required.every(k => uploaded[k]);
+    const total = Object.keys(uploaded).length;
+    const btn = document.getElementById('submit-btn');
+    const icon = document.getElementById('status-icon');
+    const text = document.getElementById('status-text');
+
+    text.textContent = `${total} document${total!==1?'s':''} uploaded · ${allRequired ? 'Ready to submit' : 'Upload required docs to continue'}`;
+    icon.textContent = allRequired ? 'check_circle' : 'upload_file';
+    icon.style.color = allRequired ? '#4ade80' : '';
+
+    if (allRequired) {
+      btn.disabled = false;
+      btn.style.background = 'linear-gradient(135deg,#7C3AED,#6D28D9)';
+      btn.style.color = 'white';
+      btn.style.boxShadow = '0 8px 24px rgba(124,58,237,0.35)';
+      btn.style.cursor = 'pointer';
+    }
+  }
+
+  function goBack() {
+    if(window.parent && window.parent.loadScreen){
+      const nav = window.parent.document.querySelector('[onclick*="agent-register-step2"]')||
+                  window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/agent-register-step2.html', nav||document.createElement('div'));
+    }
+  }
+  function goNext() {
+    if(!uploaded['govid'] || !uploaded['cpo']) return;
+    if(window.parent && window.parent.loadScreen){
+      const nav = window.parent.document.querySelector('[onclick*="agent-register-step4"]')||
+                  window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/agent-register-step4.html', nav||document.createElement('div'));
+    }
+  }
+</script>
+</body></html>

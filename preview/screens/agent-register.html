@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#7C3AED",
+          "primary-light": "#8B5CF6",
+          "background-dark": "#0A0F1E"
+        },
+        fontFamily: { "display": ["Manrope", "sans-serif"] },
+        borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; }
+  main::-webkit-scrollbar { display: none; }
+  main { scrollbar-width: none; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* Input override for Tailwind forms plugin */
+  .reg-input {
+    background-color: #0D1929 !important;
+    border-color: #1E2D45 !important;
+    color: #f1f5f9 !important;
+    border-radius: 0.75rem !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 0.9375rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    outline: none !important;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .reg-input:focus {
+    border-color: #7C3AED !important;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+  }
+  .reg-input::placeholder { color: #475569 !important; }
+  .reg-select {
+    background-color: #0D1929 !important;
+    border-color: #1E2D45 !important;
+    color: #f1f5f9 !important;
+    border-radius: 0.75rem !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 0.9375rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    outline: none !important;
+    width: 100%;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
+  .reg-select:focus {
+    border-color: #7C3AED !important;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+  }
+  .reg-select option { background-color: #0D1929; }
+
+  /* Photo upload */
+  .photo-ring {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    border: 2px dashed #7C3AED;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(124,58,237,0.08);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .photo-ring:hover { background: rgba(124,58,237,0.15); border-color: #8B5CF6; }
+  .photo-ring input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; border-radius: 50%;
+  }
+  .photo-preview {
+    width: 96px; height: 96px; border-radius: 50%;
+    object-fit: cover; display: none;
+    border: 2px solid #7C3AED;
+  }
+
+  /* Phone prefix */
+  .phone-prefix {
+    background-color: #0D1929;
+    border: 1px solid #1E2D45;
+    border-right: none;
+    border-radius: 0.75rem 0 0 0.75rem;
+    padding: 0.875rem 0.75rem;
+    color: #f1f5f9;
+    font-size: 0.9375rem;
+    font-family: 'Manrope', sans-serif;
+    display: flex; align-items: center; gap: 4px;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+  }
+  .phone-prefix:focus-within { border-color: #7C3AED; }
+  .phone-input {
+    background-color: #0D1929 !important;
+    border-color: #1E2D45 !important;
+    border-left: none !important;
+    border-radius: 0 0.75rem 0.75rem 0 !important;
+    color: #f1f5f9 !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 0.9375rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    outline: none !important;
+    flex: 1;
+    transition: border-color 0.15s;
+  }
+  .phone-input:focus { border-color: #7C3AED !important; }
+
+  /* Country dropdown */
+  .country-dropdown {
+    position: absolute; top: 100%; left: 0; z-index: 50;
+    background: #0D1929; border: 1px solid #1E2D45; border-radius: 0.75rem;
+    min-width: 220px; max-height: 200px; overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    margin-top: 4px;
+    display: none;
+  }
+  .country-dropdown.open { display: block; }
+  .country-dropdown::-webkit-scrollbar { width: 4px; }
+  .country-dropdown::-webkit-scrollbar-track { background: transparent; }
+  .country-dropdown::-webkit-scrollbar-thumb { background: #1E2D45; border-radius: 2px; }
+  .country-opt {
+    padding: 10px 14px; cursor: pointer; font-size: 0.875rem; color: #cbd5e1;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .country-opt:hover { background: rgba(124,58,237,0.12); color: #f1f5f9; }
+</style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="flex items-center px-4 pt-[50px] pb-3">
+    <button onclick="goBack()" class="flex items-center justify-center size-10 rounded-full hover:bg-white/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-100">arrow_back</span>
+    </button>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 px-5 pb-28 overflow-y-auto">
+
+    <!-- Progress -->
+    <div class="mb-5">
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-xs font-semibold" style="color:#7C3AED">Step 1 of 4</span>
+        <span class="text-xs text-slate-500">Personal Info</span>
+      </div>
+      <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full w-1/4 transition-all duration-500" style="background: linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+      </div>
+    </div>
+
+    <!-- Heading -->
+    <div class="mb-6">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="size-7 rounded-lg flex items-center justify-center" style="background:rgba(124,58,237,0.15)">
+          <span class="material-symbols-outlined text-base" style="color:#8B5CF6">badge</span>
+        </div>
+        <span class="text-xs font-semibold tracking-widest uppercase" style="color:#8B5CF6">Agent Portal</span>
+      </div>
+      <h1 class="text-2xl font-bold mb-1">Personal Information</h1>
+      <p class="text-slate-400 text-sm">Let's verify who you are. All information is kept secure.</p>
+    </div>
+
+    <!-- Photo Upload -->
+    <div class="flex flex-col items-center mb-7">
+      <div class="relative">
+        <div class="photo-ring" id="photo-ring" onclick="document.getElementById('photo-file').click()">
+          <input type="file" id="photo-file" accept="image/*" onchange="handlePhoto(event)"/>
+          <div id="photo-placeholder" class="flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-2xl" style="color:#7C3AED">add_a_photo</span>
+          </div>
+          <img id="photo-preview" class="photo-preview" alt="Profile photo"/>
+        </div>
+        <!-- Remove photo button -->
+        <button id="remove-photo" onclick="removePhoto()" class="hidden absolute -top-1 -right-1 size-6 rounded-full flex items-center justify-center text-white" style="background:#7C3AED">
+          <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+      </div>
+      <p class="text-xs text-slate-400 mt-2">Upload a clear profile photo</p>
+      <p class="text-[11px] text-slate-600 mt-0.5">JPG, PNG · Max 5 MB</p>
+    </div>
+
+    <!-- Form Fields -->
+    <div class="space-y-4">
+
+      <!-- Full Legal Name -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">FULL LEGAL NAME</label>
+        <input class="reg-input" type="text" placeholder="As shown on your ID document" id="full-name"/>
+      </div>
+
+      <!-- DOB + Gender row -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">DATE OF BIRTH</label>
+          <input class="reg-input" type="date" id="dob" style="color-scheme:dark"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">GENDER</label>
+          <select class="reg-select" id="gender">
+            <option value="" disabled selected>Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+            <option value="prefer-not">Prefer not to say</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Nationality -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">NATIONALITY</label>
+        <select class="reg-select" id="nationality">
+          <option value="" disabled selected>Select nationality</option>
+          <option>Afghan</option><option>Albanian</option><option>Algerian</option>
+          <option>American</option><option>Argentine</option><option>Australian</option>
+          <option>Austrian</option><option>Bangladeshi</option><option>Belgian</option>
+          <option>Brazilian</option><option>British</option><option>Bulgarian</option>
+          <option>Cambodian</option><option>Canadian</option><option>Chilean</option>
+          <option>Chinese</option><option>Colombian</option><option>Croatian</option>
+          <option>Czech</option><option>Danish</option><option>Dutch</option>
+          <option>Egyptian</option><option>Emirati</option><option>Ethiopian</option>
+          <option>Finnish</option><option>French</option><option>German</option>
+          <option>Ghanaian</option><option>Greek</option><option>Hungarian</option>
+          <option>Indian</option><option>Indonesian</option><option>Iranian</option>
+          <option>Iraqi</option><option>Irish</option><option>Israeli</option>
+          <option>Italian</option><option>Jamaican</option><option>Japanese</option>
+          <option>Jordanian</option><option>Kenyan</option><option>Korean</option>
+          <option>Kuwaiti</option><option>Lebanese</option><option>Libyan</option>
+          <option>Malaysian</option><option>Maldivian</option><option>Mexican</option>
+          <option>Moroccan</option><option>Mozambican</option><option>Nepali</option>
+          <option>New Zealander</option><option>Nigerian</option><option>Norwegian</option>
+          <option>Omani</option><option>Pakistani</option><option>Palestinian</option>
+          <option>Peruvian</option><option>Philippine</option><option>Polish</option>
+          <option>Portuguese</option><option>Qatari</option><option>Romanian</option>
+          <option>Russian</option><option>Saudi</option><option>Serbian</option>
+          <option>Singaporean</option><option>Somali</option><option>South African</option>
+          <option>Spanish</option><option>Sri Lankan</option><option>Sudanese</option>
+          <option>Swedish</option><option>Swiss</option><option>Syrian</option>
+          <option>Taiwanese</option><option>Thai</option><option>Tunisian</option>
+          <option>Turkish</option><option>Ugandan</option><option>Ukrainian</option>
+          <option>Venezuelan</option><option>Vietnamese</option><option>Yemeni</option>
+          <option>Zimbabwean</option>
+        </select>
+      </div>
+
+      <!-- Mobile Phone -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">MOBILE PHONE</label>
+        <div class="flex" style="border-radius:0.75rem;overflow:visible">
+          <div class="phone-prefix" id="country-prefix-btn" onclick="toggleCountryDropdown()">
+            <span id="flag-display">🇬🇧</span>
+            <span id="code-display" class="font-semibold">+44</span>
+            <span class="material-symbols-outlined text-slate-500" style="font-size:16px">expand_more</span>
+            <!-- Country dropdown -->
+            <div class="country-dropdown" id="country-dropdown">
+              <div class="country-opt" onclick="selectCountry('🇦🇺','+61','Australia',event)">🇦🇺 Australia <span class="ml-auto text-slate-500">+61</span></div>
+              <div class="country-opt" onclick="selectCountry('🇧🇩','+880','Bangladesh',event)">🇧🇩 Bangladesh <span class="ml-auto text-slate-500">+880</span></div>
+              <div class="country-opt" onclick="selectCountry('🇧🇷','+55','Brazil',event)">🇧🇷 Brazil <span class="ml-auto text-slate-500">+55</span></div>
+              <div class="country-opt" onclick="selectCountry('🇨🇦','+1','Canada',event)">🇨🇦 Canada <span class="ml-auto text-slate-500">+1</span></div>
+              <div class="country-opt" onclick="selectCountry('🇨🇳','+86','China',event)">🇨🇳 China <span class="ml-auto text-slate-500">+86</span></div>
+              <div class="country-opt" onclick="selectCountry('🇪🇬','+20','Egypt',event)">🇪🇬 Egypt <span class="ml-auto text-slate-500">+20</span></div>
+              <div class="country-opt" onclick="selectCountry('🇫🇷','+33','France',event)">🇫🇷 France <span class="ml-auto text-slate-500">+33</span></div>
+              <div class="country-opt" onclick="selectCountry('🇩🇪','+49','Germany',event)">🇩🇪 Germany <span class="ml-auto text-slate-500">+49</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇳','+91','India',event)">🇮🇳 India <span class="ml-auto text-slate-500">+91</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇩','+62','Indonesia',event)">🇮🇩 Indonesia <span class="ml-auto text-slate-500">+62</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇷','+98','Iran',event)">🇮🇷 Iran <span class="ml-auto text-slate-500">+98</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇶','+964','Iraq',event)">🇮🇶 Iraq <span class="ml-auto text-slate-500">+964</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇱','+972','Israel',event)">🇮🇱 Israel <span class="ml-auto text-slate-500">+972</span></div>
+              <div class="country-opt" onclick="selectCountry('🇮🇹','+39','Italy',event)">🇮🇹 Italy <span class="ml-auto text-slate-500">+39</span></div>
+              <div class="country-opt" onclick="selectCountry('🇯🇵','+81','Japan',event)">🇯🇵 Japan <span class="ml-auto text-slate-500">+81</span></div>
+              <div class="country-opt" onclick="selectCountry('🇯🇴','+962','Jordan',event)">🇯🇴 Jordan <span class="ml-auto text-slate-500">+962</span></div>
+              <div class="country-opt" onclick="selectCountry('🇰🇪','+254','Kenya',event)">🇰🇪 Kenya <span class="ml-auto text-slate-500">+254</span></div>
+              <div class="country-opt" onclick="selectCountry('🇰🇼','+965','Kuwait',event)">🇰🇼 Kuwait <span class="ml-auto text-slate-500">+965</span></div>
+              <div class="country-opt" onclick="selectCountry('🇱🇧','+961','Lebanon',event)">🇱🇧 Lebanon <span class="ml-auto text-slate-500">+961</span></div>
+              <div class="country-opt" onclick="selectCountry('🇲🇾','+60','Malaysia',event)">🇲🇾 Malaysia <span class="ml-auto text-slate-500">+60</span></div>
+              <div class="country-opt" onclick="selectCountry('🇲🇻','+960','Maldives',event)">🇲🇻 Maldives <span class="ml-auto text-slate-500">+960</span></div>
+              <div class="country-opt" onclick="selectCountry('🇲🇽','+52','Mexico',event)">🇲🇽 Mexico <span class="ml-auto text-slate-500">+52</span></div>
+              <div class="country-opt" onclick="selectCountry('🇲🇦','+212','Morocco',event)">🇲🇦 Morocco <span class="ml-auto text-slate-500">+212</span></div>
+              <div class="country-opt" onclick="selectCountry('🇳🇬','+234','Nigeria',event)">🇳🇬 Nigeria <span class="ml-auto text-slate-500">+234</span></div>
+              <div class="country-opt" onclick="selectCountry('🇵🇰','+92','Pakistan',event)">🇵🇰 Pakistan <span class="ml-auto text-slate-500">+92</span></div>
+              <div class="country-opt" onclick="selectCountry('🇵🇭','+63','Philippines',event)">🇵🇭 Philippines <span class="ml-auto text-slate-500">+63</span></div>
+              <div class="country-opt" onclick="selectCountry('🇷🇺','+7','Russia',event)">🇷🇺 Russia <span class="ml-auto text-slate-500">+7</span></div>
+              <div class="country-opt" onclick="selectCountry('🇸🇦','+966','Saudi Arabia',event)">🇸🇦 Saudi Arabia <span class="ml-auto text-slate-500">+966</span></div>
+              <div class="country-opt" onclick="selectCountry('🇿🇦','+27','South Africa',event)">🇿🇦 South Africa <span class="ml-auto text-slate-500">+27</span></div>
+              <div class="country-opt" onclick="selectCountry('🇪🇸','+34','Spain',event)">🇪🇸 Spain <span class="ml-auto text-slate-500">+34</span></div>
+              <div class="country-opt" onclick="selectCountry('🇱🇰','+94','Sri Lanka',event)">🇱🇰 Sri Lanka <span class="ml-auto text-slate-500">+94</span></div>
+              <div class="country-opt" onclick="selectCountry('🇸🇾','+963','Syria',event)">🇸🇾 Syria <span class="ml-auto text-slate-500">+963</span></div>
+              <div class="country-opt" onclick="selectCountry('🇹🇭','+66','Thailand',event)">🇹🇭 Thailand <span class="ml-auto text-slate-500">+66</span></div>
+              <div class="country-opt" onclick="selectCountry('🇹🇷','+90','Turkey',event)">🇹🇷 Turkey <span class="ml-auto text-slate-500">+90</span></div>
+              <div class="country-opt" onclick="selectCountry('🇦🇪','+971','UAE',event)">🇦🇪 UAE <span class="ml-auto text-slate-500">+971</span></div>
+              <div class="country-opt" onclick="selectCountry('🇺🇦','+380','Ukraine',event)">🇺🇦 Ukraine <span class="ml-auto text-slate-500">+380</span></div>
+              <div class="country-opt" onclick="selectCountry('🇬🇧','+44','United Kingdom',event)">🇬🇧 United Kingdom <span class="ml-auto text-slate-500">+44</span></div>
+              <div class="country-opt" onclick="selectCountry('🇺🇸','+1','United States',event)">🇺🇸 United States <span class="ml-auto text-slate-500">+1</span></div>
+              <div class="country-opt" onclick="selectCountry('🇻🇳','+84','Vietnam',event)">🇻🇳 Vietnam <span class="ml-auto text-slate-500">+84</span></div>
+              <div class="country-opt" onclick="selectCountry('🇾🇪','+967','Yemen',event)">🇾🇪 Yemen <span class="ml-auto text-slate-500">+967</span></div>
+            </div>
+          </div>
+          <input class="phone-input border" type="tel" placeholder="Enter phone number" id="phone-number"
+            style="border-color:#1E2D45; border-left:none;"/>
+        </div>
+      </div>
+
+      <!-- Email Address -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">EMAIL ADDRESS</label>
+        <input class="reg-input" type="email" placeholder="agent@example.com" id="email"/>
+      </div>
+
+    </div>
+
+    <!-- Info note -->
+    <div class="mt-5 flex items-start gap-3 p-3.5 rounded-xl" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2)">
+      <span class="material-symbols-outlined text-sm mt-0.5 shrink-0" style="color:#8B5CF6">info</span>
+      <p class="text-xs text-slate-400 leading-relaxed">Your information is encrypted and used only for identity verification. It will not be shared with clients.</p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 p-5" style="background:linear-gradient(to top,#0A0F1E 70%,transparent)">
+    <button onclick="goNext()" class="w-full font-bold py-3 px-5 rounded-xl transition-all flex items-center justify-center gap-2"
+      style="background:linear-gradient(160deg,#9333ea,#7C3AED,#5b21b6);box-shadow:inset 0 1px 0 rgba(255,255,255,0.14),0 4px 16px rgba(124,58,237,0.3);color:white">
+      Next — Step 2 of 4
+      <span class="material-symbols-outlined text-xl">arrow_forward</span>
+    </button>
+  </footer>
+
+<script>
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/role-selection.html', navItem || document.createElement('div'));
+    }
+  }
+
+  function goNext() {
+    // Validate required fields
+    const name = document.getElementById('full-name').value.trim();
+    const dob = document.getElementById('dob').value;
+    const email = document.getElementById('email').value.trim();
+
+    if (!name) { highlightField('full-name'); return; }
+    if (!dob)  { highlightField('dob'); return; }
+    if (!email){ highlightField('email'); return; }
+
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = window.parent.document.querySelector('[onclick*="agent-register"]') ||
+                      window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/agent-register-step2.html', navItem || document.createElement('div'));
+    }
+  }
+
+  function highlightField(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.borderColor = '#EF4444';
+    el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+    el.focus();
+    setTimeout(() => {
+      el.style.borderColor = '';
+      el.style.boxShadow = '';
+    }, 1800);
+  }
+
+  // Photo upload
+  function handlePhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const preview = document.getElementById('photo-preview');
+      const placeholder = document.getElementById('photo-placeholder');
+      const removeBtn = document.getElementById('remove-photo');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      placeholder.style.display = 'none';
+      removeBtn.classList.remove('hidden');
+      removeBtn.style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto() {
+    const preview = document.getElementById('photo-preview');
+    const placeholder = document.getElementById('photo-placeholder');
+    const removeBtn = document.getElementById('remove-photo');
+    const fileInput = document.getElementById('photo-file');
+    preview.style.display = 'none';
+    preview.src = '';
+    placeholder.style.display = 'flex';
+    removeBtn.classList.add('hidden');
+    removeBtn.style.display = '';
+    fileInput.value = '';
+  }
+
+  // Country code dropdown
+  function toggleCountryDropdown() {
+    const dd = document.getElementById('country-dropdown');
+    dd.classList.toggle('open');
+  }
+
+  function selectCountry(flag, code, name, event) {
+    event.stopPropagation();
+    document.getElementById('flag-display').textContent = flag;
+    document.getElementById('code-display').textContent = code;
+    document.getElementById('country-dropdown').classList.remove('open');
+  }
+
+  // Close dropdown on outside click
+  document.addEventListener('click', e => {
+    const btn = document.getElementById('country-prefix-btn');
+    const dd = document.getElementById('country-dropdown');
+    if (!btn.contains(e.target)) dd.classList.remove('open');
+  });
+</script>
+</body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#7C3AED",
+          "primary-light": "#8B5CF6",
+          "background-dark": "#0A0F1E"
+        },
+        fontFamily: { "display": ["Manrope", "sans-serif"] },
+        borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; }
+  main::-webkit-scrollbar { display: none; }
+  main { scrollbar-width: none; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  .reg-input {
+    background-color: #0D1929 !important;
+    border-color: #1E2D45 !important;
+    color: #f1f5f9 !important;
+    border-radius: 0.75rem !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 0.9375rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    outline: none !important;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .reg-input:focus {
+    border-color: #7C3AED !important;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+  }
+  .reg-input::placeholder { color: #475569 !important; }
+
+  /* Chip toggle */
+  .chip {
+    padding: 8px 16px;
+    border-radius: 9999px;
+    border: 2px solid #1E2D45;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Manrope', sans-serif;
+  }
+  .chip:hover { border-color: rgba(124,58,237,0.5); color: #cbd5e1; }
+  .chip.selected {
+    border-color: #7C3AED;
+    background: rgba(124,58,237,0.12);
+    color: #a78bfa;
+    font-weight: 600;
+  }
+  .chip.selected .chip-icon { display: inline; }
+  .chip .chip-icon { display: none; font-size: 14px; }
+
+  /* Availability cards */
+  .avail-card {
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    padding:14px 10px; border-radius:1rem;
+    border:1.5px solid #1E2D45; background:#0D1929;
+    cursor:pointer; transition:all 0.2s; font-family:'Manrope',sans-serif;
+  }
+  .avail-card.selected {
+    border-color:#7C3AED;
+    background:rgba(124,58,237,0.09);
+    box-shadow:0 0 0 1px rgba(124,58,237,0.2);
+  }
+  .avail-card.selected .material-symbols-outlined { color:#a78bfa !important; }
+  .avail-card.selected p:first-of-type { color:#f1f5f9 !important; }
+  .avail-card.selected div { background:rgba(124,58,237,0.15) !important; border:none !important; }
+
+  /* Toggle switch */
+  .toggle-track {
+    width: 48px; height: 26px;
+    background: #1E2D45;
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-track.on { background: #7C3AED; }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .toggle-track.on .toggle-thumb { transform: translateX(22px); }
+</style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="flex items-center px-4 pt-[50px] pb-3">
+    <button onclick="goBack()" class="flex items-center justify-center size-10 rounded-full hover:bg-white/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-100">arrow_back</span>
+    </button>
+    <h1 class="flex-1 text-center text-base font-bold -ml-10">Agent Registration</h1>
+  </header>
+
+  <!-- Progress -->
+  <div class="px-5 pb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs font-semibold" style="color:#8B5CF6">Experience &amp; Expertise</span>
+      <span class="text-xs text-slate-500 uppercase tracking-wider font-medium">Step 2 of 4</span>
+    </div>
+    <div class="flex gap-1.5 h-1.5 w-full">
+      <div class="flex-1 rounded-full" style="background:linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+      <div class="flex-1 rounded-full" style="background:linear-gradient(90deg,#7C3AED,#8B5CF6)"></div>
+      <div class="flex-1 rounded-full bg-slate-800"></div>
+      <div class="flex-1 rounded-full bg-slate-800"></div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main class="flex-1 px-5 pb-28 overflow-y-auto space-y-7">
+
+    <!-- Years of Experience Stepper -->
+    <section class="space-y-3">
+      <label class="block text-sm font-bold text-slate-200">Years of Professional Experience</label>
+      <div class="flex items-center justify-between p-4 rounded-xl" style="background:#0D1929;border:1px solid #1E2D45">
+        <button onclick="adjustYears(-1)" class="size-12 flex items-center justify-center rounded-xl transition-colors" style="background:rgba(124,58,237,0.12);color:#a78bfa" onmouseover="this.style.background='rgba(124,58,237,0.22)'" onmouseout="this.style.background='rgba(124,58,237,0.12)'">
+          <span class="material-symbols-outlined">remove</span>
+        </button>
+        <div class="text-center">
+          <span id="years-display" class="text-5xl font-bold" style="color:#8B5CF6">8</span>
+          <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mt-1">Years</p>
+        </div>
+        <button onclick="adjustYears(1)" class="size-12 flex items-center justify-center rounded-xl transition-colors" style="background:rgba(124,58,237,0.12);color:#a78bfa" onmouseover="this.style.background='rgba(124,58,237,0.22)'" onmouseout="this.style.background='rgba(124,58,237,0.12)'">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Specializations -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <label class="text-sm font-bold text-slate-200">Specializations</label>
+        <span class="text-xs text-slate-500">Select all that apply</span>
+      </div>
+      <div class="flex flex-wrap gap-2" id="spec-chips">
+        <button class="chip selected" onclick="toggleChip(this)">
+          Executive Protection <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Armed Response <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip selected" onclick="toggleChip(this)">
+          Maritime Security <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Intelligence Analysis <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Cybersecurity Ops <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Tactical Driving <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Close Protection <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Risk Assessment <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Operating Regions -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <label class="text-sm font-bold text-slate-200">Operating Regions</label>
+        <span class="text-xs text-slate-500">Select all that apply</span>
+      </div>
+      <div class="flex flex-wrap gap-2" id="region-chips">
+        <button class="chip selected" onclick="toggleChip(this)">
+          UAE <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          South Africa <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip selected" onclick="toggleChip(this)">
+          UK <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          USA <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Brazil <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Europe <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          East Africa <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+        <button class="chip" onclick="toggleChip(this)">
+          Southeast Asia <span class="material-symbols-outlined chip-icon">check_circle</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Availability Type -->
+    <section class="space-y-3">
+      <div>
+        <label class="text-sm font-bold text-slate-200">Availability</label>
+        <p class="text-xs text-slate-500 mt-0.5">How are you registering with Bravo Secure?</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <button class="avail-card selected" id="avail-fulltime" onclick="selectAvail('fulltime')">
+          <div class="size-9 rounded-xl flex items-center justify-center mb-2" style="background:rgba(124,58,237,0.15)">
+            <span class="material-symbols-outlined" style="color:#a78bfa;font-size:20px">work</span>
+          </div>
+          <p class="text-sm font-bold text-slate-100">Full Time</p>
+          <p class="text-[11px] text-slate-500 mt-0.5 leading-tight">Dedicated · primary role</p>
+        </button>
+        <button class="avail-card" id="avail-parttime" onclick="selectAvail('parttime')">
+          <div class="size-9 rounded-xl flex items-center justify-center mb-2" style="background:#0D1929;border:1px solid #1E2D45">
+            <span class="material-symbols-outlined" style="color:#475569;font-size:20px">schedule</span>
+          </div>
+          <p class="text-sm font-bold text-slate-400">Part Time</p>
+          <p class="text-[11px] text-slate-500 mt-0.5 leading-tight">Flexible · per assignment</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- Agency Representation -->
+    <section class="space-y-4 p-4 rounded-xl" style="background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2)">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex-1">
+          <h3 class="text-sm font-bold text-slate-200">Agency Representation</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Are you currently representing a security firm?</p>
+        </div>
+        <div class="toggle-track on" id="agency-toggle" onclick="toggleAgency()">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+
+      <!-- Conditional fields -->
+      <div id="agency-fields" class="space-y-3 pt-3" style="border-top:1px solid rgba(124,58,237,0.15)">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">AGENCY NAME</label>
+          <input class="reg-input" type="text" placeholder="e.g. Aegis Global Protection" id="agency-name"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 tracking-wide">REGISTRATION NUMBER</label>
+          <input class="reg-input" type="text" placeholder="e.g. REG-9948210" id="agency-reg"/>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 p-5" style="background:linear-gradient(to top,#0A0F1E 70%,transparent)">
+    <button onclick="goNext()" class="w-full font-bold py-3 px-5 rounded-xl transition-all flex items-center justify-center gap-2"
+      style="background:linear-gradient(160deg,#9333ea,#7C3AED,#5b21b6);box-shadow:inset 0 1px 0 rgba(255,255,255,0.14),0 4px 16px rgba(124,58,237,0.3);color:white;letter-spacing:0.04em">
+      Next — Step 3 of 4
+      <span class="material-symbols-outlined text-xl">arrow_forward</span>
+    </button>
+  </footer>
+
+<script>
+  let availType = 'fulltime';
+  function selectAvail(type) {
+    availType = type;
+    ['fulltime','parttime'].forEach(t => {
+      document.getElementById('avail-'+t).classList.toggle('selected', t===type);
+    });
+  }
+
+  let years = 8;
+  let agencyOn = true;
+
+  function adjustYears(delta) {
+    years = Math.max(0, Math.min(40, years + delta));
+    document.getElementById('years-display').textContent = years;
+  }
+
+  function toggleChip(btn) {
+    btn.classList.toggle('selected');
+  }
+
+  function toggleAgency() {
+    agencyOn = !agencyOn;
+    const track = document.getElementById('agency-toggle');
+    const fields = document.getElementById('agency-fields');
+    if (agencyOn) {
+      track.classList.add('on');
+      fields.style.display = '';
+    } else {
+      track.classList.remove('on');
+      fields.style.display = 'none';
+    }
+  }
+
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = window.parent.document.querySelector('[onclick*="agent-register.html"]') ||
+                      window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/agent-register.html', navItem || document.createElement('div'));
+    }
+  }
+
+  function goNext() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = window.parent.document.querySelector('[onclick*="agent-register-step3"]') ||
+                      window.parent.document.querySelector('.nav-item.active');
+      window.parent.loadScreen('screens/agent-register-step3.html', navItem || document.createElement('div'));
+    }
+  }
+</script>
+</body></html>

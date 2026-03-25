@@ -359,12 +359,9 @@
         <span class="nav-dot"></span> Personal Vault
       </div>
 
-      <div class="sidebar-section">Booking</div>
-      <div class="nav-item" onclick="loadScreen('screens/booking-home.html', this)">
-        <span class="nav-dot"></span> Booking Home
-      </div>
+      <div class="sidebar-section">Bravo Lite</div>
       <div class="nav-item" onclick="loadScreen('screens/zone-map.html', this)">
-        <span class="nav-dot"></span> Zone Map
+        <span class="nav-dot"></span> Bravo Lite Home
       </div>
       <div class="nav-item" onclick="loadScreen('screens/booking-type.html', this)">
         <span class="nav-dot"></span> Booking Type
@@ -394,8 +391,26 @@
       </div>
 
       <div class="sidebar-section">Agent</div>
-      <div class="nav-item" onclick="loadScreen('screens/agent-dashboard.html', this)">
-        <span class="nav-dot"></span> Agent Dashboard
+      <div class="nav-item" onclick="loadScreen('screens/agent-register.html', this)">
+        <span class="nav-dot"></span> Agent Register (Step 1)
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-register-step2.html', this)">
+        <span class="nav-dot"></span> Agent Register (Step 2)
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-register-step3.html', this)">
+        <span class="nav-dot"></span> Agent Register (Step 3)
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-register-step4.html', this)">
+        <span class="nav-dot"></span> Agent Register (Step 4)
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-verified.html', this)">
+        <span class="nav-dot"></span> Agent Verified
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-rejected.html', this)">
+        <span class="nav-dot"></span> Agent Rejected
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-home.html', this)">
+        <span class="nav-dot"></span> Agent Home
       </div>
       <div class="nav-item" onclick="loadScreen('screens/agent-order-confirm.html', this)">
         <span class="nav-dot"></span> Order Confirmation
@@ -403,8 +418,51 @@
       <div class="nav-item" onclick="loadScreen('screens/job-marketplace.html', this)">
         <span class="nav-dot"></span> Job Marketplace
       </div>
+      <div class="nav-item" onclick="loadScreen('screens/job-detail.html', this)">
+        <span class="nav-dot"></span> Job Detail &amp; Accept
+      </div>
       <div class="nav-item" onclick="loadScreen('screens/earnings.html', this)">
         <span class="nav-dot"></span> Earnings
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/mission-chat.html', this)">
+        <span class="nav-dot"></span> Mission Group Chat
+      </div>
+
+      <div class="sidebar-section">Ops Command</div>
+      <div class="nav-item" onclick="loadScreen('screens/ops-dashboard.html', this)">
+        <span class="nav-dot"></span> Ops Dashboard
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/ops-mission-detail.html', this)">
+        <span class="nav-dot"></span> Mission Detail &amp; Assign
+      </div>
+
+      <div class="sidebar-section">Bravo Pro</div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-landing.html', this)">
+        <span class="nav-dot"></span> Pro Landing / Subscribe
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-retainers.html', this)">
+        <span class="nav-dot"></span> Retainer Selection
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-client-profile.html', this)">
+        <span class="nav-dot"></span> Client Profile
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-itinerary.html', this)">
+        <span class="nav-dot"></span> Itinerary Upload
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-ai-scheduling.html', this)">
+        <span class="nav-dot"></span> AI Scheduling
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-risk-review.html', this)">
+        <span class="nav-dot"></span> Risk Review
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-assigned-team.html', this)">
+        <span class="nav-dot"></span> Assigned Team
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-live-mission.html', this)">
+        <span class="nav-dot"></span> Live Mission
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/bravo-pro-activity-history.html', this)">
+        <span class="nav-dot"></span> Activity History
       </div>
 
       <div class="sidebar-section">More</div>
@@ -538,6 +596,12 @@
       'screens/register.html':           { name: 'Register',          route: 'Auth/Register',          status: 'done' },
       'screens/otp.html':                { name: 'OTP Verify',        route: 'Auth/OTPVerification',   status: 'todo' },
       'screens/role-selection.html':     { name: 'Role Selection',    route: 'Auth/RoleSelection',     status: 'done' },
+      'screens/agent-register.html':      { name: 'Agent Register — Step 1', route: 'Agent/Register/Step1', status: 'done' },
+      'screens/agent-register-step2.html':{ name: 'Agent Register — Step 2', route: 'Agent/Register/Step2', status: 'done' },
+      'screens/agent-register-step3.html':{ name: 'Agent Register — Step 3', route: 'Agent/Register/Step3', status: 'done' },
+      'screens/agent-register-step4.html':{ name: 'Agent Register — Step 4', route: 'Agent/Register/Step4', status: 'done' },
+      'screens/agent-verified.html':      { name: 'Agent Verified',           route: 'Agent/Verified',         status: 'done' },
+      'screens/agent-rejected.html':      { name: 'Agent Rejected',           route: 'Agent/Rejected',         status: 'done' },
       'screens/permissions.html':        { name: 'Permissions',       route: 'Auth/Permissions',       status: 'done' },
       'screens/profile-completion.html': { name: 'Profile Completion',route: 'Auth/ProfileCompletion', status: 'todo' },
       'screens/dashboard.html':          { name: 'Dashboard',         route: 'Main/Dashboard',         status: 'done' },
@@ -550,8 +614,7 @@
       'screens/vault-otp-verify.html':   { name: 'Vault — OTP Verify', route: 'Messenger/VaultOTP',   status: 'done' },
       'screens/vault-new-pin.html':      { name: 'Vault — New PIN',   route: 'Messenger/VaultNewPIN',  status: 'done' },
       'screens/vault.html':              { name: 'Personal Vault',    route: 'Messenger/Vault',        status: 'done' },
-      'screens/booking-home.html':       { name: 'Booking Home',      route: 'Booking/Home',           status: 'todo' },
-      'screens/zone-map.html':           { name: 'Zone Map',          route: 'Booking/ZoneMap',        status: 'done' },
+      'screens/zone-map.html':           { name: 'Bravo Lite',        route: 'BravoLite/Home',         status: 'done' },
       'screens/booking-type.html':       { name: 'Booking Type',      route: 'Booking/Type',           status: 'done' },
       'screens/booking-details.html':    { name: 'Details',           route: 'Booking/Details',        status: 'done' },
       'screens/booking-datetime.html':   { name: 'Date & Time',       route: 'Booking/DateTime',       status: 'todo' },
@@ -560,11 +623,25 @@
       'screens/confirmation.html':       { name: 'Confirmation',      route: 'Booking/Confirmation',   status: 'done' },
       'screens/live-tracking.html':      { name: 'Live Tracking',     route: 'LiveOps/Tracking',       status: 'done' },
       'screens/sos.html':                { name: 'SOS',               route: 'LiveOps/SOS',            status: 'todo' },
-      'screens/agent-dashboard.html':    { name: 'Agent Dashboard',   route: 'Agent/Dashboard',        status: 'todo' },
+      'screens/agent-dashboard.html':    { name: 'Agent Dashboard',   route: 'Agent/Dashboard',        status: 'done' },
+      'screens/bravo-pro-landing.html':      { name: 'Pro — Subscribe',       route: 'BravoPro/Landing',       status: 'done' },
+      'screens/bravo-pro-retainers.html':    { name: 'Pro — Retainers',       route: 'BravoPro/Retainers',     status: 'done' },
+      'screens/bravo-pro-client-profile.html':{ name: 'Pro — Client Profile', route: 'BravoPro/ClientProfile', status: 'done' },
+      'screens/bravo-pro-itinerary.html':    { name: 'Pro — Itinerary',       route: 'BravoPro/Itinerary',     status: 'done' },
+      'screens/bravo-pro-ai-scheduling.html':{ name: 'Pro — AI Scheduling',   route: 'BravoPro/AIScheduling',  status: 'done' },
+      'screens/bravo-pro-risk-review.html':  { name: 'Pro — Risk Review',     route: 'BravoPro/RiskReview',    status: 'done' },
+      'screens/bravo-pro-assigned-team.html':{ name: 'Pro — Assigned Team',   route: 'BravoPro/AssignedTeam',  status: 'done' },
+      'screens/bravo-pro-live-mission.html': { name: 'Pro — Live Mission',    route: 'BravoPro/LiveMission',   status: 'done' },
+      'screens/bravo-pro-activity-history.html':{ name: 'Pro — Activity History', route: 'BravoPro/ActivityHistory', status: 'done' },
       'screens/agent-order-confirm.html': { name: 'Order Confirmation', route: 'Agent/OrderConfirm',    status: 'done' },
-      'screens/job-marketplace.html':    { name: 'Job Marketplace',   route: 'Agent/Jobs',             status: 'todo' },
-      'screens/earnings.html':           { name: 'Earnings',          route: 'Agent/Earnings',         status: 'todo' },
-      'screens/news-feed.html':          { name: 'Intel Feed',        route: 'Main/News',              status: 'todo' },
+      'screens/agent-home.html':          { name: 'Agent Home',         route: 'Agent/Home',             status: 'done' },
+      'screens/job-marketplace.html':    { name: 'Job Marketplace',   route: 'Agent/Jobs',             status: 'done' },
+      'screens/job-detail.html':         { name: 'Job Detail',         route: 'Agent/JobDetail',        status: 'done' },
+      'screens/earnings.html':           { name: 'Earnings',          route: 'Agent/Earnings',         status: 'done' },
+      'screens/mission-chat.html':       { name: 'Mission Chat',      route: 'Agent/MissionChat',      status: 'done' },
+      'screens/ops-dashboard.html':      { name: 'Ops Dashboard',     route: 'Ops/Command',            status: 'done' },
+      'screens/ops-mission-detail.html': { name: 'Ops Mission Detail', route: 'Ops/MissionDetail',     status: 'done' },
+      'screens/news-feed.html':          { name: 'Intel Feed',        route: 'Main/News',              status: 'done' },
       'screens/profile.html':            { name: 'Profile / Drawer',  route: 'Main/Profile',           status: 'done' },
     };
 

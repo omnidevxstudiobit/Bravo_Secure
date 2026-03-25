@@ -185,9 +185,9 @@
     <span class="material-symbols-outlined">call</span>
     <span class="text-[10px] font-bold uppercase tracking-wider">Calls</span>
   </a>
-  <a class="flex flex-col items-center gap-1 flex-1 text-slate-500 hover:text-blue-400 transition-colors" href="#">
-    <span class="material-symbols-outlined">settings</span>
-    <span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
+  <a class="flex flex-col items-center gap-1 flex-1 text-slate-500 hover:text-blue-400 transition-colors" href="#" onclick="openFeed(event)">
+    <span class="material-symbols-outlined">article</span>
+    <span class="text-[10px] font-bold uppercase tracking-wider">Feed</span>
   </a>
 </nav>
 
@@ -206,6 +206,15 @@
       const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
         .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('chat.html'));
       window.parent.loadScreen('screens/chat.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
+  function openFeed(e) {
+    e.preventDefault();
+    if (window.parent && window.parent.loadScreen) {
+      const nav = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick')?.includes('news-feed.html'));
+      window.parent.loadScreen('screens/news-feed.html', nav || window.parent.document.querySelector('.nav-item'));
     }
   }
 

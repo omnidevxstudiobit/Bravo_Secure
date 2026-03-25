@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "bg-dark": "#0A0F1E",
+        surface: "#0D1929",
+        "border-dim": "#1E2D45",
+      },
+      fontFamily: { display: ["Manrope", "sans-serif"] },
+      borderRadius: { DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+    }},
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; height: 100dvh; overflow: hidden; background: #0A0F1E; }
+  main::-webkit-scrollbar { display: none; }
+  main { scrollbar-width: none; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* Category chip colours */
+  .chip-security  { background: rgba(220,38,38,0.12);  color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+  .chip-geo       { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+  .chip-regional  { background: rgba(37,99,235,0.12);  color: #60a5fa; border: 1px solid rgba(37,99,235,0.3); }
+  .chip-business  { background: rgba(100,116,139,0.1); color: #94a3b8; border: 1px solid rgba(100,116,139,0.25); }
+  .chip-travel    { background: rgba(201,168,76,0.12); color: #d4af37; border: 1px solid rgba(201,168,76,0.3); }
+
+  /* section divider */
+  .section { border-top: 1px solid #1E2D45; padding: 28px 16px; }
+
+  /* Card surfaces */
+  .card { background: #0D1929; border: 1px solid #1E2D45; border-radius: 0.875rem; overflow: hidden; }
+</style>
+</head>
+<body class="bg-[#0A0F1E] font-display text-slate-100 h-screen flex flex-col">
+
+<!-- Header -->
+<header class="shrink-0 flex items-center gap-2 px-4 pt-[50px] pb-3" style="background:#0A0F1E;border-bottom:1px solid #1E2D45">
+  <button onclick="goBack()" class="size-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors shrink-0">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:20px">arrow_back</span>
+  </button>
+  <h2 class="flex-1 text-sm font-bold text-slate-200">Article Card Reference</h2>
+  <button class="size-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:20px">more_vert</span>
+  </button>
+</header>
+
+<!-- Scrollable content -->
+<main class="flex-1 overflow-y-auto pb-8">
+
+  <!-- Category chips legend -->
+  <div class="px-4 pt-6 pb-2">
+    <p class="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-4">Category Chip Reference</p>
+    <div class="flex flex-wrap gap-2">
+      <span class="chip-security text-[11px] font-bold px-3 py-1.5 rounded-lg">Security Alerts</span>
+      <span class="chip-geo     text-[11px] font-bold px-3 py-1.5 rounded-lg">Geopolitics</span>
+      <span class="chip-regional text-[11px] font-bold px-3 py-1.5 rounded-lg">Regional</span>
+      <span class="chip-business text-[11px] font-bold px-3 py-1.5 rounded-lg">Business</span>
+      <span class="chip-travel  text-[11px] font-bold px-3 py-1.5 rounded-lg">Travel Advisory</span>
+    </div>
+  </div>
+
+  <!-- A: Feature Card -->
+  <div class="section">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-base font-extrabold text-slate-100">A: Feature Card</h3>
+      <span class="text-[10px] font-mono text-slate-500 px-2 py-1 rounded" style="background:#0D1929;border:1px solid #1E2D45">Full-width · 16:9</span>
+    </div>
+    <div class="card">
+      <!-- Image -->
+      <div class="relative w-full" style="aspect-ratio:16/9;background:#0D2240">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8SF7olI61v9wT_De0VsKDt4nslCCOzCGkOomuWqXg8hnlkJLhb3pXyKjHkU5CGr34W6s8mHM938ztoc28CGyALpb1kYwlrK5OstceWcyHOyFthPgBnlyoJ5j6BuoGEl3B-1blhldHVlAwaa3K1v4Q7BkYbJbtm9fp5brjt0-qX6Py1QSOU5vjPGwcuyQj2nhF-f74K1WvaM4tH10UueVpZHUt1NkcF6SY-T2LSp6xuMKEITWq3fHuuehUg_aA_5TussqV0Gj5fbCv"/>
+        <!-- Gradient -->
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(13,25,41,0.9) 0%,transparent 55%)"></div>
+        <!-- Breaking badge -->
+        <div class="absolute top-3 left-3">
+          <span class="text-[10px] font-black uppercase px-2 py-1 rounded-lg" style="background:rgba(220,38,38,0.9);color:white;backdrop-filter:blur(4px)">Breaking Alert</span>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="p-4 flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+          <span class="chip-geo text-[10px] font-bold px-2 py-1 rounded-lg">Geopolitics</span>
+          <span class="text-[10px] text-slate-500">· 4m read</span>
+        </div>
+        <h4 class="text-lg font-extrabold leading-snug text-slate-100">Global Trade Routes Facing Unprecedented Disruptions in Q4</h4>
+        <p class="text-xs text-slate-400 leading-relaxed line-clamp-2">New maritime regulations and geopolitical shifts are causing significant delays across major shipping corridors...</p>
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-[10px] text-slate-500">Published 2 hours ago</span>
+          <div class="flex gap-4">
+            <span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-slate-300 transition-colors" style="font-size:20px">share</span>
+            <span class="material-symbols-outlined cursor-pointer filled" style="font-size:20px;color:#D4AF37">bookmark</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: List Card -->
+  <div class="section">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-base font-extrabold text-slate-100">B: List Card</h3>
+      <span class="text-[10px] font-mono text-slate-500 px-2 py-1 rounded" style="background:#0D1929;border:1px solid #1E2D45">Compact · 1:1 Thumb</span>
+    </div>
+    <div class="card flex gap-3 p-3">
+      <div class="size-24 shrink-0 rounded-xl overflow-hidden" style="background:#0D2240">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBunHAbHP-r7ZQfPJTo2uJMBbt7cd2KyYmNz-RiWlD76HyfMiT2Wkth9a3lXcCpbdaHvRxK8vxjTS9xaNMbiPb1ee6ipp4Nelj6TJwIkQKeLt5QZHEoR-bohrrMqzLakZ1LMhzRBCOV9rw7uSK6T9NP56kcD6MJUdkP2ovFg2lGHxcWGEr_TCqPJfJj2IZQasLAohOBHRVocK4I81KHsEMugn7u9WpO6K2ZeV7T-XD64Fygi8yFfeThw4FYcemWqhllBise8cWeNCXa"/>
+      </div>
+      <div class="flex flex-col justify-between flex-1 py-0.5">
+        <div>
+          <span class="chip-business text-[9px] font-bold px-2 py-1 rounded-lg inline-block mb-1.5">Business</span>
+          <h4 class="text-sm font-bold leading-snug line-clamp-2 text-slate-100">How remote work culture is evolving in 2024 tech hubs</h4>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] text-slate-500">12 mins ago</span>
+          <div class="flex gap-3">
+            <span class="material-symbols-outlined text-blue-500 cursor-pointer" style="font-size:18px">share</span>
+            <span class="material-symbols-outlined text-slate-600 cursor-pointer" style="font-size:18px">bookmark</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: Ad Card -->
+  <div class="section">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-base font-extrabold text-slate-100">C: Ad Card</h3>
+      <span class="text-[10px] font-mono text-slate-500 px-2 py-1 rounded" style="background:#0D1929;border:1px solid #1E2D45">Sponsored · Native</span>
+    </div>
+    <div class="rounded-xl p-4" style="background:rgba(37,99,235,0.05);border:1.5px dashed rgba(37,99,235,0.2)">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-[9px] font-black uppercase tracking-widest" style="color:rgba(96,165,250,0.6)">Sponsored</span>
+        <span class="material-symbols-outlined text-slate-600" style="font-size:14px">info</span>
+      </div>
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <h4 class="text-sm font-bold mb-1 text-slate-100">Upgrade your portfolio with gold-backed assets</h4>
+          <p class="text-xs text-slate-400 leading-relaxed line-clamp-2">Secure your future with the most stable asset in human history. Limited time entry rates.</p>
+        </div>
+        <div class="size-16 shrink-0 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#2563EB,#1d4ed8)">
+          <span class="material-symbols-outlined text-white" style="font-size:28px">trending_up</span>
+        </div>
+      </div>
+      <button class="w-full mt-3 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white" style="background:linear-gradient(160deg,#3b82f6,#2563EB,#1d4ed8);box-shadow:inset 0 1px 0 rgba(255,255,255,0.15),0 3px 10px rgba(37,99,235,0.28)">
+        Learn More
+      </button>
+    </div>
+  </div>
+
+  <!-- Interaction States -->
+  <div class="section">
+    <h3 class="text-base font-extrabold text-slate-100 mb-4">Interaction States</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="card flex flex-col items-center gap-2 p-4">
+        <span class="material-symbols-outlined filled" style="font-size:28px;color:#D4AF37">bookmark</span>
+        <span class="text-xs font-semibold text-slate-400">Save Active</span>
+      </div>
+      <div class="flex flex-col items-center gap-2 p-4 rounded-xl" style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25)">
+        <span class="material-symbols-outlined" style="font-size:28px;color:#60a5fa">share</span>
+        <span class="text-xs font-semibold text-slate-400">Share Active</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const nav = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick')?.includes('news-feed.html'));
+      window.parent.loadScreen('screens/news-feed.html', nav || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+</script>
+</body></html>

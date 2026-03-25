@@ -71,7 +71,7 @@
       </button>
 
       <!-- Agent / CPO -->
-      <button class="flex flex-col text-left p-3 rounded-xl border-2 border-slate-700 bg-slate-900/50 hover:border-primary/50 transition-all">
+      <button onclick="selectRole('agent')" class="flex flex-col text-left p-3 rounded-xl border-2 border-slate-700 bg-slate-900/50 hover:border-primary/50 transition-all">
         <div class="mb-2.5 bg-slate-800 text-primary rounded-lg size-10 flex items-center justify-center">
           <span class="material-symbols-outlined text-xl">badge</span>
         </div>
@@ -98,4 +98,15 @@
     </button>
   </footer>
 
+<script>
+  function selectRole(role) {
+    if (role === 'agent') {
+      if (window.parent && window.parent.loadScreen) {
+        const navItem = window.parent.document.querySelector('[onclick*="agent-register"]') ||
+                        window.parent.document.querySelector('.nav-item.active');
+        window.parent.loadScreen('screens/agent-register.html', navItem || document.createElement('div'));
+      }
+    }
+  }
+</script>
 </body></html>

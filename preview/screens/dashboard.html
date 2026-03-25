@@ -61,7 +61,7 @@
   </div>
 </header>
 
-<main class="flex-1 overflow-y-auto pb-20">
+<main class="flex-1 overflow-y-auto pb-32">
 
   <!-- Status Badge -->
   <div class="flex justify-center py-3">
@@ -71,47 +71,54 @@
     </div>
   </div>
 
-  <!-- Hero Tiles -->
-  <div class="grid grid-cols-2 gap-2 px-4 mb-3">
-    <div onclick="navigateTo('screens/messenger-home.html', 'Conversations', 'Messenger/Home')" class="h-[100px] bg-slate-900/50 rounded-lg border-l-4 border-purple-600 p-3 flex flex-col justify-between border border-white/5 cursor-pointer hover:bg-slate-800/70 active:scale-95 transition-all">
-      <div class="flex justify-between items-start">
-        <span class="material-symbols-outlined text-purple-400 text-[20px]">lock</span>
-        <span class="px-2 py-0.5 bg-primary rounded-full text-[9px] font-bold text-white">3 UNREAD</span>
-      </div>
-      <div>
-        <h3 class="text-sm font-bold">Bravo Messenger</h3>
-        <p class="text-[10px] text-slate-400">3 unread messages</p>
-      </div>
-    </div>
-    <div class="h-[100px] bg-slate-900/50 rounded-lg border-l-4 border-primary p-3 flex flex-col justify-between border border-white/5">
-      <div class="flex justify-between items-start">
-        <span class="material-symbols-outlined text-primary text-[20px]">security</span>
-        <span class="h-2 w-2 rounded-full bg-primary mt-1"></span>
-      </div>
-      <div>
-        <h3 class="text-sm font-bold">Bravo Secure</h3>
-        <p class="text-[10px] text-slate-400">1 active booking</p>
-      </div>
-    </div>
-  </div>
+  <!-- Module Tiles -->
+  <div class="px-4 mb-3 space-y-2">
 
-  <!-- Quick Stats Row -->
-  <div class="grid grid-cols-3 gap-2 px-4 mb-4">
-    <div class="bg-primary/5 border border-primary/10 rounded-lg p-2.5 flex flex-col items-center gap-0.5">
-      <span class="material-symbols-outlined text-primary text-[20px]">radar</span>
-      <span class="text-lg font-bold">05</span>
-      <span class="text-[9px] text-slate-400 uppercase font-medium text-center">Active Ops</span>
+    <!-- Messenger -->
+    <div onclick="navigateTo('screens/messenger-home.html', 'Conversations', 'Messenger/Home')" class="w-full bg-slate-900/50 rounded-xl border border-white/5 border-l-4 border-l-purple-600 p-3.5 flex items-center gap-3 cursor-pointer hover:bg-slate-800/60 active:scale-[0.98] transition-all">
+      <div class="size-10 rounded-lg flex items-center justify-center shrink-0" style="background:rgba(147,51,234,0.15)">
+        <span class="material-symbols-outlined text-purple-400 text-[22px]">lock</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-bold">Messenger</h3>
+        <p class="text-[11px] text-slate-400">Encrypted comms & channels</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-full text-[9px] font-bold text-white" style="background:#7C3AED">3 UNREAD</span>
+        <span class="material-symbols-outlined text-slate-600 text-[18px]">chevron_right</span>
+      </div>
     </div>
-    <div class="bg-primary/5 border border-primary/10 rounded-lg p-2.5 flex flex-col items-center gap-0.5">
-      <span class="material-symbols-outlined text-primary text-[20px]">event_available</span>
-      <span class="text-lg font-bold">01</span>
-      <span class="text-[9px] text-slate-400 uppercase font-medium">Bookings</span>
+
+    <!-- Bravo Lite -->
+    <div onclick="navigateTo('screens/zone-map.html', 'Zone Map', 'Booking/ZoneMap')" class="w-full bg-slate-900/50 rounded-xl border border-white/5 border-l-4 border-l-primary p-3.5 flex items-center gap-3 cursor-pointer hover:bg-slate-800/60 active:scale-[0.98] transition-all">
+      <div class="size-10 rounded-lg flex items-center justify-center shrink-0" style="background:rgba(37,99,235,0.15)">
+        <span class="material-symbols-outlined text-primary text-[22px]">shield</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-bold">Bravo Lite</h3>
+        <p class="text-[11px] text-slate-400">Book security & protection</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-primary"></span>
+        <span class="material-symbols-outlined text-slate-600 text-[18px]">chevron_right</span>
+      </div>
     </div>
-    <div class="bg-primary/5 border border-primary/10 rounded-lg p-2.5 flex flex-col items-center gap-0.5">
-      <span class="material-symbols-outlined text-primary text-[20px]">chat_bubble</span>
-      <span class="text-lg font-bold">12</span>
-      <span class="text-[9px] text-slate-400 uppercase font-medium">Messages</span>
+
+    <!-- Bravo Pro -->
+    <div onclick="navigateTo('screens/bravo-pro-landing.html', 'Bravo Pro', 'BravoPro/Landing')" class="w-full bg-slate-900/50 rounded-xl border border-white/5 border-l-4 border-l-indigo-500 p-3.5 flex items-center gap-3 cursor-pointer hover:bg-slate-800/60 active:scale-[0.98] transition-all">
+      <div class="size-10 rounded-lg flex items-center justify-center shrink-0" style="background:rgba(99,102,241,0.14)">
+        <span class="material-symbols-outlined text-indigo-400 text-[22px]">verified_user</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-bold">Bravo Pro</h3>
+        <p class="text-[11px] text-slate-400">VIP & corporate subscriptions</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-full text-[9px] font-bold text-indigo-300 border border-indigo-500/30" style="background:rgba(99,102,241,0.1)">PRO</span>
+        <span class="material-symbols-outlined text-slate-600 text-[18px]">chevron_right</span>
+      </div>
     </div>
+
   </div>
 
   <!-- Recent Activity -->
@@ -169,7 +176,7 @@
 </main>
 
 <!-- SOS Floating Button -->
-<div class="fixed bottom-24 right-6 z-40">
+<div class="fixed bottom-8 right-6 z-40">
   <div class="relative flex items-center justify-center">
     <div class="absolute size-20 rounded-full bg-red-600/20 border border-red-600/30"></div>
     <button onclick="openSOS()" class="size-16 rounded-full bg-red-600 text-white font-black text-xl shadow-2xl shadow-red-600/50 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
@@ -178,28 +185,6 @@
   </div>
 </div>
 
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 w-full border-t border-primary/10 bg-background-dark/95 backdrop-blur-md px-6 pb-4 pt-2 flex justify-between items-center z-50">
-  <a class="flex flex-col items-center gap-1 active-tab text-primary" href="#">
-    <div class="relative">
-      <span class="material-symbols-outlined">home</span>
-      <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary"></span>
-    </div>
-    <span class="text-[10px] font-bold">HOME</span>
-  </a>
-  <a class="flex flex-col items-center gap-1 text-slate-500" href="#">
-    <span class="material-symbols-outlined">chat_bubble</span>
-    <span class="text-[10px] font-bold">CHAT</span>
-  </a>
-  <a class="flex flex-col items-center gap-1 text-slate-500" href="#">
-    <span class="material-symbols-outlined">calendar_today</span>
-    <span class="text-[10px] font-bold">BOOKINGS</span>
-  </a>
-  <a class="flex flex-col items-center gap-1 text-slate-500" href="#">
-    <span class="material-symbols-outlined">person</span>
-    <span class="text-[10px] font-bold">PROFILE</span>
-  </a>
-</nav>
 
 <!-- ── Notification Drawer ─────────────────────────────── -->
 <div id="notif-overlay" class="hidden fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex flex-col justify-end" onclick="closeDrawer(event)">
