@@ -172,26 +172,35 @@
 </div>
 
 <!-- Bottom Nav -->
-<nav class="shrink-0 flex items-center justify-around px-2 py-2 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
-  <a class="flex flex-col items-center gap-0.5 px-4 py-1" style="color:#2563EB;">
-    <span class="material-symbols-outlined filled text-[22px]">forum</span>
-    <span class="text-[9px] font-bold uppercase tracking-tight">Messenger</span>
+<nav class="shrink-0 flex items-center justify-around px-2 pb-6 pt-2 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
+  <a class="flex flex-col items-center gap-1 flex-1 text-blue-400" href="#">
+    <span class="material-symbols-outlined filled-icon">chat_bubble</span>
+    <span class="text-[10px] font-bold uppercase tracking-wider">Chats</span>
   </a>
-  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
-    <span class="material-symbols-outlined text-[22px]">call</span>
-    <span class="text-[9px] font-bold uppercase tracking-tight">Calls</span>
+  <a class="flex flex-col items-center gap-1 flex-1 text-slate-500 hover:text-blue-400 transition-colors" href="#" onclick="openVault(event)">
+    <span class="material-symbols-outlined">verified_user</span>
+    <span class="text-[10px] font-bold uppercase tracking-wider">Vault</span>
   </a>
-  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
-    <span class="material-symbols-outlined text-[22px]">group</span>
-    <span class="text-[9px] font-bold uppercase tracking-tight">Contacts</span>
+  <a class="flex flex-col items-center gap-1 flex-1 text-slate-500 hover:text-blue-400 transition-colors" href="#">
+    <span class="material-symbols-outlined">call</span>
+    <span class="text-[10px] font-bold uppercase tracking-wider">Calls</span>
   </a>
-  <a class="flex flex-col items-center gap-0.5 px-4 py-1 text-slate-500 hover:text-primary transition-colors" href="#">
-    <span class="material-symbols-outlined text-[22px]">settings</span>
-    <span class="text-[9px] font-bold uppercase tracking-tight">Settings</span>
+  <a class="flex flex-col items-center gap-1 flex-1 text-slate-500 hover:text-blue-400 transition-colors" href="#">
+    <span class="material-symbols-outlined">settings</span>
+    <span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
   </a>
 </nav>
 
 <script>
+  function openVault(e) {
+    e.preventDefault();
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('vault-lock.html'));
+      window.parent.loadScreen('screens/vault-lock.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
   function openChat() {
     if (window.parent && window.parent.loadScreen) {
       const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))

@@ -343,8 +343,20 @@
       <div class="nav-item" onclick="loadScreen('screens/group-info.html', this)">
         <span class="nav-dot"></span> Group Chat
       </div>
+      <div class="nav-item" onclick="loadScreen('screens/vault-lock.html', this)">
+        <span class="nav-dot"></span> Vault Lock
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/vault-forgot.html', this)">
+        <span class="nav-dot"></span> Vault — Forgot PIN
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/vault-otp-verify.html', this)">
+        <span class="nav-dot"></span> Vault — OTP Verify
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/vault-new-pin.html', this)">
+        <span class="nav-dot"></span> Vault — New PIN
+      </div>
       <div class="nav-item" onclick="loadScreen('screens/vault.html', this)">
-        <span class="nav-dot"></span> Secure Vault
+        <span class="nav-dot"></span> Personal Vault
       </div>
 
       <div class="sidebar-section">Booking</div>
@@ -527,7 +539,11 @@
       'screens/chat.html':               { name: 'Chat',              route: 'Messenger/Chat',         status: 'done' },
       'screens/call.html':               { name: 'Call Screen',       route: 'Messenger/Call',         status: 'todo' },
       'screens/group-info.html':         { name: 'Group Chat',        route: 'Messenger/GroupChat',    status: 'done' },
-      'screens/vault.html':              { name: 'Secure Vault',      route: 'Messenger/Vault',        status: 'todo' },
+      'screens/vault-lock.html':         { name: 'Vault Lock',        route: 'Messenger/VaultLock',    status: 'done' },
+      'screens/vault-forgot.html':       { name: 'Vault — Forgot PIN', route: 'Messenger/VaultForgot', status: 'done' },
+      'screens/vault-otp-verify.html':   { name: 'Vault — OTP Verify', route: 'Messenger/VaultOTP',   status: 'done' },
+      'screens/vault-new-pin.html':      { name: 'Vault — New PIN',   route: 'Messenger/VaultNewPIN',  status: 'done' },
+      'screens/vault.html':              { name: 'Personal Vault',    route: 'Messenger/Vault',        status: 'done' },
       'screens/booking-home.html':       { name: 'Booking Home',      route: 'Booking/Home',           status: 'todo' },
       'screens/zone-map.html':           { name: 'Zone Map',          route: 'Booking/ZoneMap',        status: 'todo' },
       'screens/booking-type.html':       { name: 'Booking Type',      route: 'Booking/Type',           status: 'todo' },
