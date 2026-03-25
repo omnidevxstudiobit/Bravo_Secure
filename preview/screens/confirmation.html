@@ -1,22 +1,273 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { primary: "#2563EB", "bg-dark": "#0A0F1E", surface: "#0D1929", border: "#1E2D45" },
+        fontFamily: { display: ["Manrope", "sans-serif"] },
+      },
+    },
+  }
+</script>
 <style>
-  body { margin:0; background:#0a0a0a; color:#94a3b8; font-family:'Manrope',sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    height:100vh; gap:12px; }
-  .shield { color:#2563EB; opacity:0.3; }
-  p { font-size:12px; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
-  span { font-size:11px; color:#475569; }
+  *, *::before, *::after { scrollbar-width: none; -ms-overflow-style: none; }
+  *::-webkit-scrollbar { display: none; }
+  html, body { height: 100%; overflow: hidden; font-family: 'Manrope', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  @keyframes scale-in {
+    0%   { transform: scale(0);    opacity: 0; }
+    65%  { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1);    opacity: 1; }
+  }
+  @keyframes draw-check {
+    from { stroke-dashoffset: 80; }
+    to   { stroke-dashoffset: 0;  }
+  }
+  @keyframes ripple-confirm {
+    0%   { transform: scale(1);   opacity: 0.45; }
+    100% { transform: scale(2.2); opacity: 0;    }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0);     }
+  }
+
+  .anim-scale    { animation: scale-in   0.6s cubic-bezier(0.34,1.56,0.64,1) 0.1s both; }
+  .anim-check    { stroke-dasharray: 80; stroke-dashoffset: 80;
+                   animation: draw-check 0.7s ease-out 0.5s forwards; }
+  .anim-ripple   { animation: ripple-confirm 1s ease-out 0.2s forwards; }
+  .anim-ripple-2 { animation: ripple-confirm 1s ease-out 0.45s forwards; }
+  .anim-fade-1   { animation: fade-up 0.4s ease-out 0.55s both; }
+  .anim-fade-2   { animation: fade-up 0.4s ease-out 0.7s both;  }
+  .anim-fade-3   { animation: fade-up 0.4s ease-out 0.85s both; }
+  .anim-fade-4   { animation: fade-up 0.4s ease-out 1.0s both;  }
+  .anim-slide-1  { animation: slide-in-left 0.35s ease-out 0.9s  both; }
+  .anim-slide-2  { animation: slide-in-left 0.35s ease-out 1.05s both; }
+  .anim-slide-3  { animation: slide-in-left 0.35s ease-out 1.2s  both; }
 </style>
 </head>
-<body>
-<svg class="shield" width="40" height="40" viewBox="0 0 80 80" fill="none">
-  <path d="M40 5L10 18.3333V38.3333C10 57.1333 22.8 74.4667 40 78.3333C57.2 74.4667 70 57.1333 70 38.3333V18.3333L40 5Z" stroke="currentColor" stroke-width="2.5" fill="none"/>
-</svg>
-<p>Design pending</p>
-<span>Send your HTML design to implement this screen</span>
-</body>
-</html>
+<body class="bg-bg-dark text-slate-100 h-screen flex flex-col">
+
+<!-- Scrollable content -->
+<main class="flex-1 overflow-y-auto px-4 pb-4">
+
+  <!-- Success hero -->
+  <div class="flex flex-col items-center text-center pt-10 pb-6">
+
+    <!-- Animated check circle -->
+    <div class="relative flex items-center justify-center mb-5">
+      <div class="anim-ripple absolute rounded-full" style="width:110px; height:110px; background:rgba(37,99,235,0.2);"></div>
+      <div class="anim-ripple-2 absolute rounded-full" style="width:110px; height:110px; background:rgba(37,99,235,0.12);"></div>
+      <div class="anim-scale relative z-10 size-20 rounded-full flex items-center justify-center"
+        style="background:rgba(37,99,235,0.15); border:2px solid rgba(37,99,235,0.4);">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path class="anim-check" d="M10 21 L17 28 L30 13" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="anim-fade-1 text-[26px] font-extrabold text-slate-100 leading-tight mb-2">Booking Confirmed</h1>
+    <p class="anim-fade-2 text-[13px] text-slate-400 mb-4">Your protection team has been dispatched</p>
+
+    <!-- Ref badge -->
+    <div class="anim-fade-3 flex items-center gap-2 px-4 py-2 rounded-full" style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25);">
+      <span class="material-symbols-outlined text-primary" style="font-size:14px;">tag</span>
+      <span class="text-[11px] font-extrabold uppercase tracking-widest text-primary">REF #BRV-20260326-0042</span>
+    </div>
+  </div>
+
+  <!-- Summary card -->
+  <div class="anim-fade-4 rounded-2xl overflow-hidden mb-4" style="background:#0D1929; border-left:3px solid #2563EB; border-top:1px solid #1E2D45; border-right:1px solid #1E2D45; border-bottom:1px solid #1E2D45;">
+
+    <!-- Header -->
+    <div class="flex items-start justify-between px-4 pt-4 pb-3 border-b" style="border-color:#1E2D45;">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Service Details</p>
+        <p class="text-[15px] font-extrabold text-slate-100">Elite Rapid Response</p>
+      </div>
+      <div class="text-right">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Status</p>
+        <div class="flex items-center gap-1.5 justify-end">
+          <span class="size-1.5 rounded-full animate-pulse" style="background:#34D399;"></span>
+          <span class="text-[12px] font-bold text-emerald-400">Dispatched</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETA banner -->
+    <div class="flex items-center gap-3 mx-4 my-3 px-4 py-3 rounded-xl" style="background:rgba(37,99,235,0.07); border:1px solid rgba(37,99,235,0.2);">
+      <span class="material-symbols-outlined text-primary shrink-0" style="font-size:20px;">schedule</span>
+      <p class="text-[13px] font-semibold text-slate-200">Team arrives in <span class="font-extrabold text-primary">45 min</span></p>
+    </div>
+
+    <!-- Details grid -->
+    <div class="grid grid-cols-2 gap-0 border-t" style="border-color:#1E2D45;">
+      <div class="px-4 py-3 border-r" style="border-color:#1E2D45;">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Location</p>
+        <p class="text-[12px] font-semibold text-slate-200">Mayfair, London</p>
+      </div>
+      <div class="px-4 py-3">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Personnel</p>
+        <p class="text-[12px] font-semibold text-slate-200">Alpha Team (4)</p>
+      </div>
+      <div class="px-4 py-3 border-t border-r" style="border-color:#1E2D45;">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Date</p>
+        <p class="text-[12px] font-semibold text-slate-200">Wed, 26 Mar 2026</p>
+      </div>
+      <div class="px-4 py-3 border-t" style="border-color:#1E2D45;">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Amount Paid</p>
+        <p class="text-[12px] font-extrabold text-slate-100">$345.00</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Agent info -->
+  <div class="anim-slide-1 flex items-center gap-3 px-4 py-3 rounded-xl mb-3" style="background:#0D1929; border:1px solid #1E2D45;">
+    <div class="size-10 rounded-full flex items-center justify-center text-[13px] font-extrabold text-white shrink-0"
+      style="background:linear-gradient(135deg,#1D4ED8,#7C3AED);">MT</div>
+    <div class="flex-1 min-w-0">
+      <p class="text-[13px] font-bold text-slate-100">Marcus Trent</p>
+      <div class="flex items-center gap-1 mt-0.5">
+        <span class="material-symbols-outlined filled text-amber-400" style="font-size:12px;">star</span>
+        <span class="text-[11px] text-slate-400">4.8 · Lead CPO assigned</span>
+      </div>
+    </div>
+    <button class="size-9 rounded-full flex items-center justify-center" style="background:rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.2);">
+      <span class="material-symbols-outlined text-primary" style="font-size:18px;">call</span>
+    </button>
+  </div>
+
+  <!-- Add-ons summary -->
+  <div class="anim-slide-2 px-4 py-3 rounded-xl mb-4" style="background:#0D1929; border:1px solid #1E2D45;">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Package Included</p>
+    <div class="flex flex-wrap gap-2">
+      <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold" style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2); color:#93C5FD;">
+        <span class="material-symbols-outlined" style="font-size:12px;">person</span> 1× Lead CPO
+      </span>
+      <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold" style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2); color:#93C5FD;">
+        <span class="material-symbols-outlined" style="font-size:12px;">directions_car</span> Security Driver
+      </span>
+      <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold" style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2); color:#93C5FD;">
+        <span class="material-symbols-outlined" style="font-size:12px;">radio</span> Secure Comms Kit
+      </span>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="anim-slide-3 space-y-3 pb-4">
+    <button onclick="trackTeam()" class="w-full py-4 rounded-xl font-extrabold text-[14px] text-white tracking-wide transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+      style="background:#2563EB; box-shadow:0 6px 20px rgba(37,99,235,0.35);">
+      <span class="material-symbols-outlined" style="font-size:18px;">location_on</span>
+      Track Your Team
+    </button>
+
+    <button onclick="shareDetails()" class="w-full py-4 rounded-xl font-extrabold text-[14px] transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+      style="background:rgba(37,99,235,0.08); border:2px solid rgba(37,99,235,0.3); color:#60A5FA;">
+      <span class="material-symbols-outlined" style="font-size:18px;">share</span>
+      Share Details
+    </button>
+
+    <button onclick="goHome()" class="w-full py-3 text-[13px] font-semibold text-slate-500 transition-colors hover:text-slate-300">
+      Back to Home
+    </button>
+  </div>
+
+</main>
+
+<!-- Share bottom sheet -->
+<div id="share-modal" class="fixed inset-0 z-50 hidden flex-col items-center justify-end" style="background:rgba(0,0,0,0.7); backdrop-filter:blur(4px);">
+  <div id="share-sheet" class="w-full rounded-t-[24px] px-5 pt-5 pb-8"
+    style="background:#0D1929; border-top:1px solid #1E2D45; transform:translateY(100%); transition:transform 0.3s ease;">
+
+    <div class="w-10 h-1 rounded-full mb-4 mx-auto" style="background:rgba(37,99,235,0.3);"></div>
+    <p class="text-[15px] font-extrabold text-slate-100 mb-4">Share Booking Details</p>
+
+    <div class="grid grid-cols-4 gap-3 mb-5">
+      <button class="flex flex-col items-center gap-2">
+        <div class="size-12 rounded-2xl flex items-center justify-center" style="background:#0A0F1E; border:1px solid #1E2D45;">
+          <span class="material-symbols-outlined text-primary" style="font-size:20px;">message</span>
+        </div>
+        <span class="text-[10px] text-slate-500">Message</span>
+      </button>
+      <button class="flex flex-col items-center gap-2">
+        <div class="size-12 rounded-2xl flex items-center justify-center" style="background:#0A0F1E; border:1px solid #1E2D45;">
+          <span class="material-symbols-outlined text-primary" style="font-size:20px;">mail</span>
+        </div>
+        <span class="text-[10px] text-slate-500">Email</span>
+      </button>
+      <button class="flex flex-col items-center gap-2">
+        <div class="size-12 rounded-2xl flex items-center justify-center" style="background:#0A0F1E; border:1px solid #1E2D45;">
+          <span class="material-symbols-outlined text-primary" style="font-size:20px;">copy_all</span>
+        </div>
+        <span class="text-[10px] text-slate-500">Copy Link</span>
+      </button>
+      <button class="flex flex-col items-center gap-2">
+        <div class="size-12 rounded-2xl flex items-center justify-center" style="background:#0A0F1E; border:1px solid #1E2D45;">
+          <span class="material-symbols-outlined text-primary" style="font-size:20px;">more_horiz</span>
+        </div>
+        <span class="text-[10px] text-slate-500">More</span>
+      </button>
+    </div>
+
+    <button onclick="closeShare()" class="w-full py-3.5 rounded-xl font-bold text-[13px] text-slate-400"
+      style="background:#0A0F1E; border:1px solid #1E2D45;">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<script>
+  function trackTeam() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('live-tracking'));
+      window.parent.loadScreen('screens/live-tracking.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
+  function shareDetails() {
+    const modal = document.getElementById('share-modal');
+    const sheet = document.getElementById('share-sheet');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
+  }
+
+  function closeShare() {
+    const sheet = document.getElementById('share-sheet');
+    sheet.style.transform = 'translateY(100%)';
+    setTimeout(() => {
+      const modal = document.getElementById('share-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  }
+
+  document.getElementById('share-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeShare();
+  });
+
+  function goHome() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('zone-map'));
+      window.parent.loadScreen('screens/zone-map.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+</script>
+
+</body></html>

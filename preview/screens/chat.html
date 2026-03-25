@@ -154,7 +154,7 @@
       type="text"
     />
   </div>
-  <button class="text-slate-500 hover:text-blue-400 transition-colors">
+  <button onclick="openTimer()" class="text-slate-500 hover:text-blue-400 transition-colors">
     <span class="material-symbols-outlined text-[22px]">schedule</span>
   </button>
   <button class="size-9 flex items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95"
@@ -162,6 +162,58 @@
     <span class="material-symbols-outlined text-white text-[18px]">send</span>
   </button>
 </footer>
+
+<!-- Timer Bottom Sheet Overlay -->
+<div id="timer-overlay" class="fixed inset-0 z-50 flex flex-col justify-end hidden" style="background:rgba(0,0,0,0.6);">
+  <div id="timer-sheet" class="w-full rounded-t-[20px] flex flex-col shadow-2xl border-t"
+    style="background:#0D1929; border-color:#1E2D45; height:380px; transform:translateY(100%); transition:transform 0.3s ease;">
+
+    <!-- Handle + Header -->
+    <div class="pt-3 pb-2 px-4 flex flex-col items-center shrink-0">
+      <div class="h-1.5 w-12 rounded-full mb-4" style="background:rgba(37,99,235,0.3);"></div>
+      <div class="w-full flex justify-between items-center mb-1">
+        <div class="w-8"></div>
+        <h2 class="text-slate-100 font-bold text-[15px]">Message disappears after</h2>
+        <button onclick="closeTimer()" class="size-8 flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">close</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Wheel Picker -->
+    <div class="relative flex-1 flex flex-col items-center justify-center overflow-hidden">
+      <!-- Selection stripe -->
+      <div class="absolute top-1/2 -translate-y-1/2 w-full h-12 pointer-events-none z-10" style="background:rgba(37,99,235,0.08); border-top:1px solid rgba(37,99,235,0.2); border-bottom:1px solid rgba(37,99,235,0.2);"></div>
+      <!-- Options -->
+      <div id="picker-scroll" class="w-full h-full overflow-y-auto flex flex-col items-center snap-y snap-mandatory" style="scrollbar-width:none; padding:48px 0;">
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'Off')">Off</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'5s')">5s</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'30s')">30s</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center font-bold text-[17px] cursor-pointer" id="selected-option" style="color:#2563EB;" onclick="selectTimer(this,'1m')">1m</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'5m')">5m</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'30m')">30m</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'1h')">1h</div>
+        <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 font-medium text-[15px] cursor-pointer hover:text-slate-300" onclick="selectTimer(this,'24h')">24h</div>
+      </div>
+      <!-- Gradient fade -->
+      <div class="pointer-events-none absolute inset-0 z-20" style="background:linear-gradient(to bottom, #0D1929 0%, transparent 35%, transparent 65%, #0D1929 100%);"></div>
+    </div>
+
+    <!-- Preview -->
+    <p id="timer-preview" class="text-slate-400 text-[12px] italic text-center px-6 pb-3 shrink-0">
+      This message will be deleted 1 minute after it is read.
+    </p>
+
+    <!-- Set Timer Button -->
+    <div class="px-5 pb-6 shrink-0">
+      <button onclick="setTimer()" class="w-full font-bold py-3.5 rounded-xl text-white text-[14px] transition-all active:scale-[0.98]"
+        style="background:#2563EB; box-shadow:0 6px 20px rgba(37,99,235,0.35);">
+        Set Timer
+      </button>
+    </div>
+
+  </div>
+</div>
 
 <script>
   function goBack() {
@@ -171,6 +223,55 @@
       window.parent.loadScreen('screens/messenger-home.html', navItem || window.parent.document.querySelector('.nav-item'));
     }
   }
+
+  let currentTimer = '1m';
+
+  const previewMap = {
+    'Off':  'Messages will not auto-delete.',
+    '5s':   'This message will be deleted 5 seconds after it is read.',
+    '30s':  'This message will be deleted 30 seconds after it is read.',
+    '1m':   'This message will be deleted 1 minute after it is read.',
+    '5m':   'This message will be deleted 5 minutes after it is read.',
+    '30m':  'This message will be deleted 30 minutes after it is read.',
+    '1h':   'This message will be deleted 1 hour after it is read.',
+    '24h':  'This message will be deleted 24 hours after it is read.',
+  };
+
+  function openTimer() {
+    const overlay = document.getElementById('timer-overlay');
+    const sheet = document.getElementById('timer-sheet');
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
+  }
+
+  function closeTimer() {
+    const sheet = document.getElementById('timer-sheet');
+    sheet.style.transform = 'translateY(100%)';
+    setTimeout(() => document.getElementById('timer-overlay').classList.add('hidden'), 300);
+  }
+
+  function selectTimer(el, val) {
+    currentTimer = val;
+    document.querySelectorAll('#picker-scroll > div').forEach(d => {
+      d.style.color = '';
+      d.style.fontWeight = '';
+      d.style.fontSize = '';
+      d.removeAttribute('id');
+    });
+    el.style.color = '#2563EB';
+    el.style.fontWeight = '700';
+    el.style.fontSize = '17px';
+    el.id = 'selected-option';
+    document.getElementById('timer-preview').textContent = previewMap[val];
+  }
+
+  function setTimer() {
+    closeTimer();
+  }
+
+  document.getElementById('timer-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeTimer();
+  });
 </script>
 </body>
 </html>

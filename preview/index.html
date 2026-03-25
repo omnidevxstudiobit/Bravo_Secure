@@ -372,6 +372,9 @@
       <div class="nav-item" onclick="loadScreen('screens/booking-details.html', this)">
         <span class="nav-dot"></span> Details
       </div>
+      <div class="nav-item" onclick="loadScreen('screens/booking-datetime.html', this)">
+        <span class="nav-dot"></span> Date &amp; Time
+      </div>
       <div class="nav-item" onclick="loadScreen('screens/add-ons.html', this)">
         <span class="nav-dot"></span> Add-Ons
       </div>
@@ -393,6 +396,9 @@
       <div class="sidebar-section">Agent</div>
       <div class="nav-item" onclick="loadScreen('screens/agent-dashboard.html', this)">
         <span class="nav-dot"></span> Agent Dashboard
+      </div>
+      <div class="nav-item" onclick="loadScreen('screens/agent-order-confirm.html', this)">
+        <span class="nav-dot"></span> Order Confirmation
       </div>
       <div class="nav-item" onclick="loadScreen('screens/job-marketplace.html', this)">
         <span class="nav-dot"></span> Job Marketplace
@@ -537,7 +543,7 @@
       'screens/dashboard.html':          { name: 'Dashboard',         route: 'Main/Dashboard',         status: 'done' },
       'screens/messenger-home.html':     { name: 'Conversations',     route: 'Messenger/Home',         status: 'done' },
       'screens/chat.html':               { name: 'Chat',              route: 'Messenger/Chat',         status: 'done' },
-      'screens/call.html':               { name: 'Call Screen',       route: 'Messenger/Call',         status: 'todo' },
+      'screens/call.html':               { name: 'Call Screen',       route: 'Messenger/Call',         status: 'done' },
       'screens/group-info.html':         { name: 'Group Chat',        route: 'Messenger/GroupChat',    status: 'done' },
       'screens/vault-lock.html':         { name: 'Vault Lock',        route: 'Messenger/VaultLock',    status: 'done' },
       'screens/vault-forgot.html':       { name: 'Vault — Forgot PIN', route: 'Messenger/VaultForgot', status: 'done' },
@@ -545,15 +551,17 @@
       'screens/vault-new-pin.html':      { name: 'Vault — New PIN',   route: 'Messenger/VaultNewPIN',  status: 'done' },
       'screens/vault.html':              { name: 'Personal Vault',    route: 'Messenger/Vault',        status: 'done' },
       'screens/booking-home.html':       { name: 'Booking Home',      route: 'Booking/Home',           status: 'todo' },
-      'screens/zone-map.html':           { name: 'Zone Map',          route: 'Booking/ZoneMap',        status: 'todo' },
-      'screens/booking-type.html':       { name: 'Booking Type',      route: 'Booking/Type',           status: 'todo' },
-      'screens/booking-details.html':    { name: 'Details',           route: 'Booking/Details',        status: 'todo' },
-      'screens/add-ons.html':            { name: 'Add-Ons',           route: 'Booking/AddOns',         status: 'todo' },
-      'screens/payment.html':            { name: 'Payment',           route: 'Booking/Payment',        status: 'todo' },
-      'screens/confirmation.html':       { name: 'Confirmation',      route: 'Booking/Confirmation',   status: 'todo' },
-      'screens/live-tracking.html':      { name: 'Live Tracking',     route: 'LiveOps/Tracking',       status: 'todo' },
+      'screens/zone-map.html':           { name: 'Zone Map',          route: 'Booking/ZoneMap',        status: 'done' },
+      'screens/booking-type.html':       { name: 'Booking Type',      route: 'Booking/Type',           status: 'done' },
+      'screens/booking-details.html':    { name: 'Details',           route: 'Booking/Details',        status: 'done' },
+      'screens/booking-datetime.html':   { name: 'Date & Time',       route: 'Booking/DateTime',       status: 'todo' },
+      'screens/add-ons.html':            { name: 'Add-Ons',           route: 'Booking/AddOns',         status: 'done' },
+      'screens/payment.html':            { name: 'Payment',           route: 'Booking/Payment',        status: 'done' },
+      'screens/confirmation.html':       { name: 'Confirmation',      route: 'Booking/Confirmation',   status: 'done' },
+      'screens/live-tracking.html':      { name: 'Live Tracking',     route: 'LiveOps/Tracking',       status: 'done' },
       'screens/sos.html':                { name: 'SOS',               route: 'LiveOps/SOS',            status: 'todo' },
       'screens/agent-dashboard.html':    { name: 'Agent Dashboard',   route: 'Agent/Dashboard',        status: 'todo' },
+      'screens/agent-order-confirm.html': { name: 'Order Confirmation', route: 'Agent/OrderConfirm',    status: 'done' },
       'screens/job-marketplace.html':    { name: 'Job Marketplace',   route: 'Agent/Jobs',             status: 'todo' },
       'screens/earnings.html':           { name: 'Earnings',          route: 'Agent/Earnings',         status: 'todo' },
       'screens/news-feed.html':          { name: 'Intel Feed',        route: 'Main/News',              status: 'todo' },

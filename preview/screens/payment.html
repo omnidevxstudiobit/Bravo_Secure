@@ -1,22 +1,348 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { primary: "#2563EB", "bg-dark": "#0A0F1E", surface: "#0D1929", border: "#1E2D45" },
+        fontFamily: { display: ["Manrope", "sans-serif"] },
+      },
+    },
+  }
+</script>
 <style>
-  body { margin:0; background:#0a0a0a; color:#94a3b8; font-family:'Manrope',sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    height:100vh; gap:12px; }
-  .shield { color:#2563EB; opacity:0.3; }
-  p { font-size:12px; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
-  span { font-size:11px; color:#475569; }
+  *, *::before, *::after { scrollbar-width: none; -ms-overflow-style: none; }
+  *::-webkit-scrollbar { display: none; }
+  html, body { height: 100%; overflow: hidden; font-family: 'Manrope', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* Input override — forms plugin */
+  .pay-input {
+    background: #0A0F1E !important;
+    border: 1px solid #1E2D45 !important;
+    border-radius: 12px !important;
+    color: #f1f5f9 !important;
+    font-family: 'Manrope', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 14px 16px !important;
+    width: 100% !important;
+    outline: none !important;
+    transition: border-color 0.15s !important;
+  }
+  .pay-input:focus {
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12) !important;
+  }
+  .pay-input::placeholder { color: #475569 !important; font-weight: 500 !important; }
+
+  /* Tab active underline */
+  .tab-active { color: #2563EB !important; border-bottom: 2px solid #2563EB; }
+  .tab-inactive { color: #475569; border-bottom: 2px solid transparent; }
+
+  /* Payment success overlay */
+  @keyframes success-scale {
+    0%   { transform: scale(0);   opacity: 0; }
+    55%  { transform: scale(1.2); opacity: 1; }
+    75%  { transform: scale(0.95);            }
+    100% { transform: scale(1);               }
+  }
+  @keyframes ripple-pay {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    100% { transform: scale(2.8); opacity: 0;   }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  .success-icon  { animation: success-scale 0.5s cubic-bezier(.36,.07,.19,.97) 0.1s both; }
+  .ripple-pay    { animation: ripple-pay 0.9s ease-out forwards; }
+  .ripple-pay-2  { animation: ripple-pay 0.9s ease-out 0.25s forwards; }
+  .fade-up       { animation: fade-up 0.4s ease-out 0.4s both; }
+  .fade-up-2     { animation: fade-up 0.4s ease-out 0.55s both; }
+  .fade-up-3     { animation: fade-up 0.4s ease-out 0.7s both; }
 </style>
 </head>
-<body>
-<svg class="shield" width="40" height="40" viewBox="0 0 80 80" fill="none">
-  <path d="M40 5L10 18.3333V38.3333C10 57.1333 22.8 74.4667 40 78.3333C57.2 74.4667 70 57.1333 70 38.3333V18.3333L40 5Z" stroke="currentColor" stroke-width="2.5" fill="none"/>
-</svg>
-<p>Design pending</p>
-<span>Send your HTML design to implement this screen</span>
-</body>
-</html>
+<body class="bg-bg-dark text-slate-100 h-screen flex flex-col">
+
+<!-- Header -->
+<header class="shrink-0 flex items-center justify-between px-4 border-b" style="padding-top:50px; padding-bottom:12px; background:#0A0F1E; border-color:#1E2D45;">
+  <div class="flex items-center gap-3">
+    <button onclick="goBack()" class="size-9 flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-300" style="font-size:20px;">arrow_back</span>
+    </button>
+    <span class="text-[11px] font-bold uppercase tracking-[2px] text-slate-400">Payment</span>
+  </div>
+  <div></div>
+</header>
+
+<!-- Scrollable content -->
+<main class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+
+  <!-- Booking summary card -->
+  <div class="rounded-2xl overflow-hidden" style="background:#0D1929; border:1px solid #1E2D45;">
+    <div class="flex items-start justify-between px-4 pt-4 pb-3 border-b" style="border-color:#1E2D45;">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Booking Summary</p>
+        <h2 class="text-[15px] font-extrabold text-slate-100">Executive Transport</h2>
+        <p class="text-[12px] text-slate-500 mt-0.5">Transfer · Mayfair → Heathrow T5</p>
+      </div>
+      <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase text-primary shrink-0" style="background:rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.2);">Premium</span>
+    </div>
+
+    <!-- Route dots -->
+    <div class="px-4 py-3 border-b" style="border-color:#1E2D45;">
+      <div class="flex items-start gap-3">
+        <div class="flex flex-col items-center gap-1 mt-1 shrink-0">
+          <div class="size-2 rounded-full" style="background:#2563EB;"></div>
+          <div class="w-px" style="height:16px; background:#1E2D45;"></div>
+          <div class="size-2 rounded-sm" style="background:#60A5FA;"></div>
+        </div>
+        <div class="space-y-3 flex-1 min-w-0">
+          <p class="text-[12px] font-semibold text-slate-300">123 Mayfair St, London</p>
+          <p class="text-[12px] font-semibold text-slate-300">Heathrow Airport, Terminal 5</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total row -->
+    <div class="flex items-center justify-between px-4 py-3">
+      <span class="text-[12px] font-semibold text-slate-500">Total Amount</span>
+      <span class="text-[20px] font-extrabold text-slate-100">$345.00</span>
+    </div>
+  </div>
+
+  <!-- Payment method tabs -->
+  <div class="flex border-b" style="border-color:#1E2D45;">
+    <button id="tab-card" onclick="switchTab('card')" class="flex-1 py-3 text-[13px] font-bold tab-active transition-colors">Card</button>
+    <button id="tab-credits" onclick="switchTab('credits')" class="flex-1 py-3 text-[13px] font-bold tab-inactive transition-colors">Bravo Credits</button>
+    <button id="tab-corp" onclick="switchTab('corp')" class="flex-1 py-3 text-[13px] font-bold tab-inactive transition-colors">Corporate</button>
+  </div>
+
+  <!-- Card form -->
+  <div id="panel-card" class="space-y-3">
+
+    <!-- Card number -->
+    <div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Card Number</p>
+      <div class="relative">
+        <input type="text" class="pay-input pr-14" placeholder="0000  0000  0000  0000" maxlength="19" oninput="formatCard(this)"/>
+        <!-- Mastercard icon -->
+        <div class="absolute right-3 top-1/2 -translate-y-1/2 flex shrink-0">
+          <svg width="38" height="24" viewBox="0 0 38 24">
+            <rect width="38" height="24" rx="4" fill="#0D1929"/>
+            <circle cx="14" cy="12" r="8" fill="#EB001B" fill-opacity="0.85"/>
+            <circle cx="24" cy="12" r="8" fill="#F79E1B" fill-opacity="0.85"/>
+            <path d="M19 5.7a8 8 0 0 1 0 12.6A8 8 0 0 1 19 5.7z" fill="#FF5F00" fill-opacity="0.7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expiry + CVV -->
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Expiry Date</p>
+        <input type="text" class="pay-input text-center" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"/>
+      </div>
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">CVV</p>
+        <input type="password" class="pay-input text-center" placeholder="•••" maxlength="4"/>
+      </div>
+    </div>
+
+    <!-- Cardholder name -->
+    <div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Cardholder Name</p>
+      <input type="text" class="pay-input" placeholder="James Harrington"/>
+    </div>
+
+    <!-- Save card toggle -->
+    <label class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer" style="background:#0D1929; border:1px solid #1E2D45;">
+      <div class="flex-1">
+        <p class="text-[13px] font-semibold text-slate-100">Save card for future bookings</p>
+        <p class="text-[11px] text-slate-500">Encrypted & stored securely</p>
+      </div>
+      <div id="save-toggle" onclick="toggleSave()" class="relative shrink-0 w-11 h-6 rounded-full transition-colors cursor-pointer" style="background:#2563EB;">
+        <div id="save-knob" class="absolute top-0.5 right-0.5 size-5 rounded-full bg-white transition-transform" style="transform:translateX(0);"></div>
+      </div>
+    </label>
+
+    <!-- PCI badge -->
+    <div class="flex items-center justify-center gap-2 pt-1" style="opacity:0.45;">
+      <span class="material-symbols-outlined text-slate-400" style="font-size:14px;">lock</span>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">PCI Secure · End-to-End Encrypted</p>
+    </div>
+
+  </div>
+
+  <!-- Bravo Credits panel -->
+  <div id="panel-credits" class="hidden space-y-4">
+    <div class="flex items-center gap-3 px-4 py-4 rounded-2xl" style="background:#0D1929; border:1px solid #1E2D45;">
+      <div class="size-10 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.2);">
+        <span class="material-symbols-outlined text-primary" style="font-size:20px;">toll</span>
+      </div>
+      <div class="flex-1">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Available Credits</p>
+        <p class="text-[20px] font-extrabold text-slate-100">1,240 <span class="text-[13px] font-normal text-slate-500">credits</span></p>
+      </div>
+      <div class="text-right">
+        <p class="text-[10px] text-slate-500">≈ Value</p>
+        <p class="text-[14px] font-bold text-primary">$124.00</p>
+      </div>
+    </div>
+    <div class="flex items-start gap-3 px-4 py-3 rounded-xl" style="background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);">
+      <span class="material-symbols-outlined shrink-0 mt-0.5" style="font-size:16px; color:#FBBF24;">info</span>
+      <p class="text-[12px] text-slate-400 leading-snug">You need <span class="font-bold text-slate-200">3,450 credits</span> for this booking. Top up or pay the remainder by card.</p>
+    </div>
+    <button class="w-full py-3 rounded-xl font-bold text-[13px] text-primary transition-all active:scale-[0.98]"
+      style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2);">
+      Top Up Credits
+    </button>
+  </div>
+
+  <!-- Corporate panel -->
+  <div id="panel-corp" class="hidden space-y-3">
+    <div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Company Name</p>
+      <input type="text" class="pay-input" placeholder="Harrington Industries Ltd"/>
+    </div>
+    <div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Purchase Order No.</p>
+      <input type="text" class="pay-input" placeholder="PO-2026-XXXX"/>
+    </div>
+    <div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 px-1">Cost Centre</p>
+      <input type="text" class="pay-input" placeholder="CC-SECURITY-001"/>
+    </div>
+    <div class="flex items-start gap-3 px-4 py-3 rounded-xl" style="background:rgba(37,99,235,0.06); border:1px solid rgba(37,99,235,0.2);">
+      <span class="material-symbols-outlined text-primary shrink-0 mt-0.5" style="font-size:16px;">corporate_fare</span>
+      <p class="text-[12px] text-slate-400 leading-snug">Invoice will be sent to your registered corporate email within 24 hours.</p>
+    </div>
+  </div>
+
+  <div class="pb-2"></div>
+
+</main>
+
+<!-- Footer CTA -->
+<div class="shrink-0 px-4 pt-3 pb-4 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
+  <button onclick="confirmPayment()" class="w-full py-4 rounded-xl font-extrabold text-[14px] text-white tracking-wide transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+    style="background:#2563EB; box-shadow:0 6px 20px rgba(37,99,235,0.35);">
+    <span class="material-symbols-outlined" style="font-size:18px;">lock</span>
+    Confirm Booking — $345.00
+  </button>
+</div>
+
+<!-- Payment success overlay -->
+<div id="success-overlay" class="fixed inset-0 z-[60] hidden flex-col items-center justify-center px-6"
+  style="background:#0A0F1E;">
+
+  <!-- Ripples + icon -->
+  <div class="relative flex items-center justify-center mb-6">
+    <div class="ripple-pay absolute rounded-full" style="width:120px; height:120px; background:rgba(52,211,153,0.15);"></div>
+    <div class="ripple-pay-2 absolute rounded-full" style="width:120px; height:120px; background:rgba(52,211,153,0.1);"></div>
+    <div class="success-icon relative z-10 size-20 rounded-full flex items-center justify-center"
+      style="background:rgba(52,211,153,0.15); border:2px solid rgba(52,211,153,0.3);">
+      <span class="material-symbols-outlined filled" style="font-size:40px; color:#34D399;">check_circle</span>
+    </div>
+  </div>
+
+  <h2 class="fade-up text-[22px] font-extrabold text-slate-100 text-center mb-1">Booking Confirmed!</h2>
+  <p class="fade-up text-[13px] text-slate-500 text-center mb-6">Payment processed securely</p>
+
+  <!-- Booking ref card -->
+  <div class="fade-up-2 w-full rounded-2xl px-5 py-4 mb-4" style="background:#0D1929; border:1px solid #1E2D45;">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Booking Ref</p>
+        <p class="text-[14px] font-extrabold text-primary">BRV-2026-4821</p>
+      </div>
+      <div class="text-right">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Amount Paid</p>
+        <p class="text-[14px] font-extrabold text-slate-100">$345.00</p>
+      </div>
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Date</p>
+        <p class="text-[12px] font-semibold text-slate-300">Wed, 26 Mar 2026</p>
+      </div>
+      <div class="text-right">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Status</p>
+        <p class="text-[12px] font-bold text-emerald-400">Confirmed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade-up-3 w-full space-y-3">
+    <button onclick="goToDashboard()" class="w-full py-4 rounded-xl font-extrabold text-[14px] text-white transition-all active:scale-[0.98]"
+      style="background:#2563EB; box-shadow:0 6px 20px rgba(37,99,235,0.35);">
+      Track My Booking
+    </button>
+    <button onclick="goBack()" class="w-full py-3 text-[13px] font-semibold text-slate-500">
+      Back to Home
+    </button>
+  </div>
+
+</div>
+
+<script>
+  let saveEnabled = true;
+
+  function toggleSave() {
+    saveEnabled = !saveEnabled;
+    const toggle = document.getElementById('save-toggle');
+    const knob = document.getElementById('save-knob');
+    toggle.style.background = saveEnabled ? '#2563EB' : '#1E2D45';
+    knob.style.transform = saveEnabled ? 'translateX(0)' : 'translateX(-20px)';
+  }
+
+  function switchTab(tab) {
+    ['card','credits','corp'].forEach(t => {
+      document.getElementById('tab-' + t).className =
+        'flex-1 py-3 text-[13px] font-bold transition-colors ' + (t === tab ? 'tab-active' : 'tab-inactive');
+      document.getElementById('panel-' + t).classList.toggle('hidden', t !== tab);
+    });
+  }
+
+  function formatCard(el) {
+    let v = el.value.replace(/\D/g, '').slice(0, 16);
+    el.value = v.replace(/(.{4})/g, '$1  ').trim();
+  }
+
+  function formatExpiry(el) {
+    let v = el.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+    el.value = v;
+  }
+
+  function confirmPayment() {
+    const overlay = document.getElementById('success-overlay');
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+  }
+
+  function goToDashboard() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('confirmation'));
+      window.parent.loadScreen('screens/confirmation.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('add-ons'));
+      window.parent.loadScreen('screens/add-ons.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+</script>
+
+</body></html>

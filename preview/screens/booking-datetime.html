@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { primary: "#2563EB", "bg-dark": "#0A0F1E", surface: "#0D1929", border: "#1E2D45" },
+        fontFamily: { display: ["Manrope", "sans-serif"] },
+      },
+    },
+  }
+</script>
+<style>
+  *, *::before, *::after { scrollbar-width: none; -ms-overflow-style: none; }
+  *::-webkit-scrollbar { display: none; }
+  html, body { height: 100%; overflow: hidden; font-family: 'Manrope', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  .wheel-fade {
+    background: linear-gradient(to bottom,
+      #0D1929 0%,
+      transparent 28%,
+      transparent 72%,
+      #0D1929 100%);
+  }
+</style>
+</head>
+<body class="bg-bg-dark text-slate-100 h-screen flex flex-col">
+
+<!-- Header -->
+<header class="shrink-0 flex items-center justify-between px-4 border-b" style="padding-top:50px; padding-bottom:12px; background:#0A0F1E; border-color:#1E2D45;">
+  <div class="flex items-center gap-3">
+    <button onclick="goBack()" class="size-9 flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+      <span class="material-symbols-outlined text-slate-300" style="font-size:20px;">arrow_back</span>
+    </button>
+    <span class="text-[11px] font-bold uppercase tracking-[2px] text-slate-400">Date &amp; Time</span>
+  </div>
+  <div></div>
+</header>
+
+<!-- Scrollable content -->
+<main class="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+
+  <!-- Booking summary card -->
+  <div class="flex items-center gap-3 px-4 py-3 rounded-xl" style="background:#0D1929; border:1px solid #1E2D45;">
+    <div class="size-9 rounded-[10px] flex items-center justify-center shrink-0" style="background:rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.2);">
+      <span class="material-symbols-outlined text-primary" style="font-size:18px;">schedule</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Booking Type</p>
+      <p class="text-[13px] font-bold text-slate-100">Time Slot <span class="text-slate-500 font-normal">· 1–24 hours</span></p>
+    </div>
+    <span class="text-[12px] font-extrabold text-primary">From $450</span>
+  </div>
+
+  <!-- Date picker -->
+  <div>
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-[13px] font-bold text-slate-100">Select Date</p>
+      <span class="text-[12px] font-semibold text-primary">March 2026</span>
+    </div>
+    <div class="flex gap-2 overflow-x-auto pb-1" id="date-row">
+
+      <button onclick="selectDate(this, 25)" data-day="25"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Tue</span>
+        <span class="text-[19px] font-extrabold text-slate-300">25</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 26)" data-day="26"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all date-selected"
+        style="width:56px; height:76px; background:#0D1929; border-color:#2563EB; box-shadow:0 0 0 1px #2563EB, 0 0 16px rgba(37,99,235,0.15);">
+        <span class="text-[9px] font-bold uppercase text-primary">Wed</span>
+        <span class="text-[19px] font-extrabold text-white">26</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#2563EB;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 27)" data-day="27"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Thu</span>
+        <span class="text-[19px] font-extrabold text-slate-300">27</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 28)" data-day="28"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Fri</span>
+        <span class="text-[19px] font-extrabold text-slate-300">28</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 29)" data-day="29"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Sat</span>
+        <span class="text-[19px] font-extrabold text-slate-300">29</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 30)" data-day="30"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Sun</span>
+        <span class="text-[19px] font-extrabold text-slate-300">30</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+      <button onclick="selectDate(this, 31)" data-day="31"
+        class="date-card shrink-0 flex flex-col items-center justify-center rounded-2xl border transition-all"
+        style="width:56px; height:76px; background:#0D1929; border-color:#1E2D45;">
+        <span class="text-[9px] font-bold uppercase text-slate-500">Mon</span>
+        <span class="text-[19px] font-extrabold text-slate-300">31</span>
+        <div class="size-1.5 rounded-full mt-0.5" style="background:#1E2D45;"></div>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Time picker wheel -->
+  <div>
+    <p class="text-[13px] font-bold text-slate-100 mb-3">Start Time</p>
+    <div class="relative rounded-2xl overflow-hidden" style="background:#0D1929; border:1px solid #1E2D45; height:168px;">
+      <!-- Selection stripe -->
+      <div class="absolute top-1/2 -translate-y-1/2 w-full h-12 pointer-events-none z-10"
+        style="background:rgba(37,99,235,0.07); border-top:1px solid rgba(37,99,235,0.2); border-bottom:1px solid rgba(37,99,235,0.2);"></div>
+      <!-- Fade overlay -->
+      <div class="wheel-fade absolute inset-0 pointer-events-none z-20"></div>
+
+      <div class="flex h-full relative z-10">
+
+        <!-- Hour wheel -->
+        <div class="flex-1 overflow-y-auto flex flex-col items-center snap-y snap-mandatory" style="padding:60px 0;">
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">01</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">02</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">03</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">04</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">05</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">06</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">07</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">08</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">09</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-100 text-[22px] font-extrabold" style="color:#fff;">10</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">11</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">12</div>
+        </div>
+
+        <!-- Separator -->
+        <div class="flex items-center justify-center shrink-0 text-[22px] font-extrabold text-primary" style="width:20px;">:</div>
+
+        <!-- Minute wheel -->
+        <div class="flex-1 overflow-y-auto flex flex-col items-center snap-y snap-mandatory" style="padding:60px 0;">
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">15</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">30</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-100 text-[22px] font-extrabold" style="color:#fff;">45</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">00</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">15</div>
+        </div>
+
+        <!-- AM/PM wheel -->
+        <div class="flex-1 overflow-y-auto flex flex-col items-center snap-y snap-mandatory" style="padding:60px 0;">
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-600 text-[16px] font-medium">PM</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-100 text-[22px] font-extrabold" style="color:#fff;">AM</div>
+          <div class="h-12 w-full flex items-center justify-center snap-center text-slate-500 text-[18px] font-medium">PM</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Duration chips -->
+  <div>
+    <p class="text-[13px] font-bold text-slate-100 mb-3">Duration</p>
+    <div class="grid grid-cols-4 gap-2">
+      <button onclick="selectDuration(this)" class="duration-chip py-3 rounded-xl text-[13px] font-bold text-slate-300 transition-all"
+        style="background:#0D1929; border:1px solid #1E2D45;">4h</button>
+      <button onclick="selectDuration(this)" class="duration-chip py-3 rounded-xl text-[13px] font-extrabold text-white transition-all duration-selected"
+        style="background:rgba(37,99,235,0.15); border:2px solid #2563EB; box-shadow:0 0 16px rgba(37,99,235,0.15);">8h</button>
+      <button onclick="selectDuration(this)" class="duration-chip py-3 rounded-xl text-[13px] font-bold text-slate-300 transition-all"
+        style="background:#0D1929; border:1px solid #1E2D45;">12h</button>
+      <button onclick="selectDuration(this)" class="duration-chip py-3 rounded-xl text-[13px] font-bold text-slate-300 transition-all"
+        style="background:#0D1929; border:1px solid #1E2D45;">24h</button>
+    </div>
+  </div>
+
+  <!-- Warning banner -->
+  <div class="flex items-start gap-3 px-4 py-3 rounded-xl" style="background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);">
+    <span class="material-symbols-outlined shrink-0 mt-0.5" style="font-size:18px; color:#FBBF24;">warning</span>
+    <div>
+      <p class="text-[12px] font-bold" style="color:#FBBF24;">Rapid Deployment Notice</p>
+      <p class="text-[12px] text-slate-400 mt-0.5 leading-snug">Booking within 3 hours of deployment may incur a rush surcharge.</p>
+    </div>
+  </div>
+
+  <div class="pb-4"></div>
+
+</main>
+
+<!-- Footer CTA -->
+<div class="shrink-0 px-4 py-4 border-t" style="background:#0A0F1E; border-color:#1E2D45;">
+  <button onclick="goNext()" class="w-full py-4 rounded-xl font-extrabold text-[14px] text-white tracking-wide transition-all active:scale-[0.98]"
+    style="background:#2563EB; box-shadow:0 6px 20px rgba(37,99,235,0.35);">
+    Continue
+  </button>
+</div>
+
+<script>
+  function selectDate(el, day) {
+    document.querySelectorAll('.date-card').forEach(c => {
+      c.style.borderColor = '#1E2D45';
+      c.style.boxShadow = 'none';
+      c.querySelector('span:nth-child(1)').style.color = '';
+      c.querySelector('span:nth-child(2)').style.color = '';
+      c.querySelector('div').style.background = '#1E2D45';
+    });
+    el.style.borderColor = '#2563EB';
+    el.style.boxShadow = '0 0 0 1px #2563EB, 0 0 16px rgba(37,99,235,0.15)';
+    el.querySelector('span:nth-child(1)').style.color = '#2563EB';
+    el.querySelector('span:nth-child(2)').style.color = '#ffffff';
+    el.querySelector('div').style.background = '#2563EB';
+  }
+
+  function selectDuration(el) {
+    document.querySelectorAll('.duration-chip').forEach(c => {
+      c.style.background = '#0D1929';
+      c.style.border = '1px solid #1E2D45';
+      c.style.boxShadow = 'none';
+      c.style.color = '';
+      c.style.fontWeight = '700';
+    });
+    el.style.background = 'rgba(37,99,235,0.15)';
+    el.style.border = '2px solid #2563EB';
+    el.style.boxShadow = '0 0 16px rgba(37,99,235,0.15)';
+    el.style.color = '#ffffff';
+    el.style.fontWeight = '800';
+  }
+
+  function goNext() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('add-ons'));
+      window.parent.loadScreen('screens/add-ons.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+
+  function goBack() {
+    if (window.parent && window.parent.loadScreen) {
+      const navItem = Array.from(window.parent.document.querySelectorAll('.nav-item'))
+        .find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes('booking-type'));
+      window.parent.loadScreen('screens/booking-type.html', navItem || window.parent.document.querySelector('.nav-item'));
+    }
+  }
+</script>
+
+</body></html>
